@@ -80,5 +80,5 @@ namespace ft
     void swap(stack<T, Container>& x, stack<T, Container>& y)
     noexcept(noexcept(x.swap(y)));
 
-}  // std
+} 
 

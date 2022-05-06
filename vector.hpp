@@ -14,24 +14,29 @@ namespace ft
 {
 
     template <class T, class Allocator = allocator<T> >
-    class vector
-    {
+    class vector{
     public:
+        // types:
         typedef T value_type;
         typedef Allocator allocator_type;
         typedef typename allocator_type::reference reference;
         typedef typename allocator_type::const_reference const_reference;
-        typedef implementation - defined iterator;
-        typedef implementation - defined const_iterator;
         typedef typename allocator_type::size_type size_type;
         typedef typename allocator_type::difference_type difference_type;
         typedef typename allocator_type::pointer pointer;
         typedef typename allocator_type::const_pointer const_pointer;
-        typedef std::reverse_iterator<iterator> reverse_iterator;
-        typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+        typedef pointer iterator;
+        typedef const_pointer const_iterator;
+        typedef ft::reverse_iterator<iterator> reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
-        vector()
-            noexcept(is_nothrow_default_constructible<allocator_type>::value);
+        private:
+
+            pointer                                             _begin;
+            size_type                                           _size;
+
+        // construct/copy/destroy:
+        vector();
         explicit vector(const allocator_type &);
         explicit vector(size_type n);
         explicit vector(size_type n, const allocator_type &); // C++14
@@ -44,19 +49,16 @@ namespace ft
         vector(initializer_list<value_type> il);
         vector(initializer_list<value_type> il, const allocator_type &a);
         ~vector();
+
         vector &operator=(const vector &x);
         vector &operator=(vector &&x)
             noexcept(
                 allocator_type::propagate_on_container_move_assignment::value ||
                 allocator_type::is_always_equal::value); // C++17
         vector &operator=(initializer_list<value_type> il);
-        template <class InputIterator>
-        void assign(InputIterator first, InputIterator last);
-        void assign(size_type n, const value_type &u);
-        void assign(initializer_list<value_type> il);
 
-        allocator_type get_allocator() const noexcept;
 
+        // iterators:
         iterator begin() noexcept;
         const_iterator begin() const noexcept;
         iterator end() noexcept;
@@ -67,12 +69,14 @@ namespace ft
         reverse_iterator rend() noexcept;
         const_reverse_iterator rend() const noexcept;
 
+        // capacity:
         size_type size() const noexcept;
         size_type max_size() const noexcept;
         size_type capacity() const noexcept;
         bool empty() const noexcept;
         void reserve(size_type n);
 
+        // element access:
         reference operator[](size_type n);
         const_reference operator[](size_type n) const;
         reference at(size_type n);
@@ -83,8 +87,12 @@ namespace ft
         reference back();
         const_reference back() const;
 
-        value_type *data() noexcept;
-        const value_type *data() const noexcept;
+
+        // modifiers:
+        template <class InputIterator>
+        void assign(InputIterator first, InputIterator last);
+        void assign(size_type n, const value_type &u);
+        void assign(initializer_list<value_type> il);
 
         void push_back(const value_type &x);
         void push_back(value_type &&x);
@@ -105,17 +113,15 @@ namespace ft
         void resize(size_type sz);
         void resize(size_type sz, const value_type &c);
 
-        void swap(vector &)
-            noexcept(allocator_traits<allocator_type>::propagate_on_container_swap::value ||
-                     allocator_traits<allocator_type>::is_always_equal::value); // C++17
+        void swap(vector &);
+   
+        allocator_type get_allocator() const noexcept;
     };
 
     template <class InputIterator, class Allocator = allocator<typename iterator_traits<InputIterator>::value_type> >
     vector(InputIterator, InputIterator, Allocator = Allocator())
         -> vector<typename iterator_traits<InputIterator>::value_type, Allocator>;
 
-    template <class Allocator>
-    struct hash<std::vector<bool, Allocator> >;
 
     template <class T, class Allocator>
     bool operator==(const vector<T, Allocator> &x, const vector<T, Allocator> &y);
@@ -134,8 +140,4 @@ namespace ft
     void swap(vector<T, Allocator> &x, vector<T, Allocator> &y)
         noexcept(noexcept(x.swap(y)));
 
-    template <class T, class Allocator, class U>
-    void erase(vector<T, Allocator> &c, const U &value); // C++20
-    template <class T, class Allocator, class Predicate>
-    void erase_if(vector<T, Allocator> &c, Predicate pred); // C++20
 }

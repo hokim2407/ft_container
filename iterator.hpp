@@ -410,5 +410,5 @@ namespace ft
     template <class T, size_t N> constexpr T* data(T (&array)[N]) noexcept;           // C++17
     template <class E> constexpr const E* data(initializer_list<E> il) noexcept;      // C++17
 
-}  // std
+} 
 
