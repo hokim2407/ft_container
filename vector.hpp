@@ -15,7 +15,7 @@
 #include <limits>
 #include <initializer_list>
 #include "iterator_traits.hpp"
-#include <iterator>
+#include "iterator.hpp"
 namespace ft
 {
 
@@ -31,10 +31,12 @@ namespace ft
         typedef typename allocator_type::difference_type difference_type;
         typedef typename allocator_type::pointer pointer;
         typedef typename allocator_type::const_pointer const_pointer;
-        typedef pointer iterator;
-        typedef const_pointer const_iterator;
-        // typedef ft::reverse_iterator<iterator> reverse_iterator;
-        // typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+
+        typedef ft::iterator<T> iterator;
+        typedef ft::const_iterator<T> const_iterator;
+
+        typedef ft::reverse_iterator<T> reverse_iterator;
+        typedef ft::const_reverse_iterator<T> const_reverse_iterator;
 
         private:
 
@@ -102,23 +104,35 @@ namespace ft
 
         // // iterators:
         iterator begin() {
-            return this->_begin;
+            return iterator(this->_begin);
         }
         const_iterator begin() const  {
-            return this->_begin;
+            return const_iterator(this->_begin);
         }
          iterator end() {
-            return this->_end;
+            return  iterator(this->_end);
          }
         const_iterator end() const {
 
-            return this->_end;
+            return const_iterator(this->_end);
          }
 
-        // // reverse_iterator rbegin() ;
-        // // const_reverse_iterator rbegin() const ;
-        // // reverse_iterator rend() ;
-        // // const_reverse_iterator rend() const ;
+        reverse_iterator rbegin() {
+
+            return  reverse_iterator(this->_end);
+        }
+        const_reverse_iterator rbegin() const {
+            
+            return  const_reverse_iterator(this->_end);
+        }
+        reverse_iterator rend() {
+            
+            return  reverse_iterator(this->_end);
+        }
+        const_reverse_iterator rend() const {
+            
+            return  const_reverse_iterator(this->_end);
+        }
 
         // // capacity:
         size_type size() const{
@@ -227,7 +241,7 @@ namespace ft
         iterator insert(const_iterator position, size_type n, const value_type &x){
             size_type idx = 0;
             // find iter index
-            for (;this->_begin + idx < position; idx ++) ;
+            for (;this->_begin + idx < position.base(); idx ++) ;
 
             if(size()+n >= capacity())
                 reserve(capacity() * 2);
@@ -242,25 +256,6 @@ namespace ft
                 *(this->_begin + i) = x;
             return (this->_begin + idx);
         }
-        // TODO: enable if 
-        // template <class InputIterator> 
-        // iterator insert(const_iterator position, InputIterator first, InputIterator last){
-        //     size_type dist = 0;
-        //     for (;this->_begin + dist <= position; dist ++) ;
-
-        //     size_type len = 0;
-        //     for (;first + len <= last; len ++) ;
-
-        //     if(size() + len >= capacity()) // TODO : change to while 
-        //         reserve(capacity() * 2);
-
-        //     for(size_type i = dist ; i < size(); i++){
-        //         *(this->_begin + i + len) = *(this->_begin + i);
-        //     }
-        //     for(size_type i = dist ; i < len; i++)
-        //         *(this->_begin + i) = *(first + i);
-        //     return (this->_begin + dist);
-        // }
 
         iterator erase(const_iterator position){
            return erase(position, position + 1);
@@ -269,7 +264,7 @@ namespace ft
         iterator erase(const_iterator first, const_iterator last){
 
             size_type idx = 0;
-            for (; this->_begin + idx < first; idx++)
+            for (; this->_begin + idx < first.base(); idx++)
                 ;
             size_type len = 0;
             for (; first + len < last; len++)
