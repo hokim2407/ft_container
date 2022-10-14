@@ -147,7 +147,7 @@ namespace ft
         }
         int operator-(const_iterator &it)
         {
-            return (*this->ptr - it.base());
+            return (this->ptr - it.base());
         }
         const_iterator operator-(int n)
         {
