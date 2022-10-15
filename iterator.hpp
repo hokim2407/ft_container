@@ -197,6 +197,10 @@ namespace ft
         }
         reverse_iterator operator+(int n) { return (reverse_iterator(base() - n)); }
         reverse_iterator operator-(int n) { return (reverse_iterator(base() + n)); }
+        reverse_iterator operator++() { return (reverse_iterator(--current)); }
+        reverse_iterator operator++(int) { return (reverse_iterator(--current)); }
+        reverse_iterator operator--() { return (reverse_iterator(++current)); }
+        reverse_iterator operator--(int) { return (reverse_iterator(++current)); }
         bool operator==(const reverse_iterator &it) { return (this->ptr == it.base()); }
         bool operator!=(const reverse_iterator &it) { return (this->ptr != it.base()); }
         bool operator<(const reverse_iterator &it) { return (this->ptr < it.base()); }

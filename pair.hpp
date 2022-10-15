@@ -9,6 +9,8 @@ namespace ft
     template <class T1, class T2>
     struct pair
     {
+        typedef T1 key_type;
+        typedef T2 value_type;
         T1 first;
         T2 second;
         pair() : first(), second() {}

@@ -10,6 +10,9 @@ namespace ft
     template <class T>
     class Node
     {
+        typedef typename T::key_type key_type;
+        typedef typename T::value_type value_type;
+
     public:
         T data;
         Node<T> *left;
@@ -27,7 +30,63 @@ namespace ft
         }
         Node(Node<T> *n)
         {
-            setNode(n);
+            *this = n;
+        }
+        Node &operator=(const Node &n)
+        {
+            data = n->data;
+            left = n->left;
+            right = n->right;
+            parent = n->parent;
+            height = n->height;
+            isLeft = n->isLeft;
+            return *this;
+        }
+        Node *biggerNode()
+        {
+            Node *ptr = this;
+            if (ptr->right)
+            {
+                ptr = ptr->right;
+                while (ptr->left != NULL)
+                {
+                    ptr = ptr->left;
+                }
+            }
+            else if (ptr->parent && ptr->isLeft == true)
+            {
+                ptr = ptr->parent;
+            }
+            else if (ptr->parent && ptr->isLeft == false)
+            {
+                key_type key = ptr->data.first;
+                ptr = ptr->parent;
+                while (ptr != NULL && ptr->data.first < key)
+                {
+                    ptr = ptr->parent;
+                }
+            }
+            return ptr;
+        }
+        Node *smallerNode()
+        {
+            Node *ptr = this;
+            if (ptr->left)
+                ptr = ptr->left;
+            else if (ptr->isLeft == false)
+                ptr = ptr->parent;
+            else
+            {
+                key_type key = ptr->data.first;
+                while (ptr != NULL && key < ptr->data.first)
+                {
+                    ptr = ptr->parent;
+                }
+            }
+            return ptr;
+        }
+        ~Node()
+        {
         }
         bool operator<(const Node<T> &n2)
         {
@@ -42,15 +101,6 @@ namespace ft
             return this->data > n2.data;
         };
 
-        void setNode(Node<T> *n) 
-        {
-            data = n->data;
-            left = n->left;
-            right =n->right;
-            parent =n->parent;
-            height = n->height;
-            isLeft = n->isLeft;
-        }
         void setHeight()
         {
             unsigned int originalH = height;
@@ -92,7 +142,7 @@ namespace ft
             int rightH = right ? right->height : 0;
             return leftH - rightH;
         };
-        Node* swap(Node* n)
+        Node *swap(Node *n)
         {
             //only data stap
             T temp = n->data;
@@ -100,7 +150,6 @@ namespace ft
             data = temp;
 
             return n;
-
         };
     };
 
@@ -117,43 +166,79 @@ namespace ft
         typedef Alloc allocator_type;
         typedef ft::pair<Key, T> value_type;
         typedef Node<value_type> Node;
+        typedef typename allocator_type::size_type size_type;
+        typedef typename allocator_type::difference_type difference_type;
 
     public:
-        Node *root;
         bool debugMode;
-        Tree(bool debug = false) : root(NULL), debugMode(debug)
+
+    private:
+        Node *_root;
+        size_type _size;
+        key_compare _key_comp;
+        allocator_type _alloc;
+        Node *_first;
+        Node *_last;
+        // typename allocator_type::template rebind<Node>::other _node_allocator;
+    public:
+        Tree(const key_compare &key_comp = key_compare(), const allocator_type &alloc = allocator_type(), bool debug = true)
+            : debugMode(debug), _root(NULL), _size(0), _key_comp(key_comp), _alloc(alloc)
         {
+            this->_first = NULL;
+            this->_last = NULL;
 
             if (debugMode)
                 std::cout << "in" << std::endl;
         };
         ~Tree(){};
+        Tree(Tree &t, const key_compare &key_comp = key_compare(), const allocator_type &alloc = allocator_type(), bool debug = true)
+            : _root(NULL), _key_comp(key_comp), _alloc(alloc), debugMode(debug)
+        {
+            this->_first = t.first();
+            this->_last = t.last();
+            *this = t;
+        };
+        Tree &operator=(const Tree &t)
+        {
+            this->clear();
+            this->_root = t._root;
+            this->_key_comp = t.get_key_comp();
+            this->_alloc = t.get_alloc();
+            this->_size = t.size();
 
-    private:
-        key_compare _compare;
-        allocator_type _allocator;
-        // typename allocator_type::template rebind<Node>::other _node_allocator;
-    public:
+            this->_first = t.first();
+            this->_last = t.last();
+            return *this;
+        }
+        Node *base()
+        {
+            return this->_root;
+        };
+        key_compare get_key_comp() const
+        {
+            return this->_key_comp;
+        };
+        allocator_type get_alloc() const
+        {
+            return this->_alloc;
+        };
+
         Node *findParent(Node *parentNode, Node *targetNode)
         {
             Node *nextPatent = NULL;
+
             if (*parentNode > *targetNode)
-            {
                 nextPatent = parentNode->left;
-            }
+
             else if (*parentNode < *targetNode)
-            {
                 nextPatent = parentNode->right;
-            }
+
             if (nextPatent == NULL)
                 return parentNode;
+
             return findParent(nextPatent, targetNode);
         }
-        void strRepeat(int count, std::string str)
-        {
-            for (int i = 0; i < count; i++)
-                std::cout << str;
-        }
+
         void print(Node *parentNode, std::string prefix = "")
         {
             if (parentNode == NULL)
@@ -164,160 +249,223 @@ namespace ft
             std::cout << (parentNode->isLeft ? "└──" : "├──");
             std::string parent = "";
             // print the value of the node
-            if(parentNode->parent)
-                std::cout  <<"("<<(parentNode->parent->data.first) << "->) ";
-            std::cout <<"\033[92m\033[1m"<< parentNode->data.first<< "\033[0m [" << parentNode->height << "]" << (parentNode->isLeft == true ? "L":"R") << std::endl;
+            // if (parentNode->parent)
+            //     std::cout << "p:" << (parentNode->parent->data.first) << ", ";
+            // if (parentNode->left)
+            //     std::cout << "l:" << (parentNode->left->data.first) << ", ";
+            // if (parentNode->right)
+            //     std::cout << "r:" << (parentNode->right->data.first) << ", ";
+            std::cout << "\033[92m\033[1m" << parentNode->data.first << "\033[0m [" << parentNode->height << "]" << (parentNode->isLeft == true ? "L" : "R") << std::endl;
 
             // enter the next tree level - left and right branch
             print(parentNode->right, prefix + (parentNode->isLeft == true ? "    " : "│   "));
             print(parentNode->left, prefix + (parentNode->isLeft == true ? "    " : "│   "));
         }
+
         void insert(value_type data)
         {
+            this->_size++;
             if (debugMode)
                 std::cout << "====== insert " << data.first << " ======" << std::endl;
             Node *newNode = new Node(data);
-            if (root == NULL)
+
+            if (_root == NULL)
             {
-                root = newNode;
+                _root = newNode;
+                this->_first = newNode;
+                this->_last = newNode;
                 return;
             }
-            Node *parnetNode = findParent(root, newNode);
+            Node *parnetNode = findParent(_root, newNode);
             newNode->parent = parnetNode;
 
-            if (*parnetNode > *newNode){
+            if (*parnetNode > *newNode)
                 parnetNode->setLeft(newNode);
-                }
-            else{
+            else
                 parnetNode->setRight(newNode);
-                }
-            balance (parnetNode);
+            balance(newNode);
+
+            if (newNode->data.first < this->_first->data.first)
+                this->_first = newNode;
+            if (newNode->data.first > this->_last->data.first)
+                this->_last = newNode;
             if (debugMode)
-                print(root);
+                print(_root);
         }
-        void balance (Node *parnetNode) {
-            while (parnetNode != NULL)
+        void balance(Node *node)
+        {
+            while (node != NULL)
             {
-                if (parnetNode->bf() > 1)
-                    l_rotation(parnetNode);
-                else if (parnetNode->bf() < -1)
-                    r_rotation(parnetNode);
+                if (node->bf() > 1)
+                {
+                    if (node->left && node->left->right)
+                        r_rotation(node->left);
+                    l_rotation(node);
+                }
+                else if (node->bf() < -1)
+                {
+                    if (node->right && node->right->left)
+                        l_rotation(node->right);
+                    r_rotation(node);
+                }
                 else
-                    parnetNode = parnetNode->parent;
+                    node = node->parent;
             }
-
-
         }
 
         void remove(key_type key)
         {
-            Node *target = search(root, key);
+            this->_size--;
+            Node *target = search(_root, key);
             if (debugMode)
                 std::cout << "====== delete " << target->data.first << " ======" << std::endl;
-            while (target->left != NULL || target->right != NULL)
+
+
+            std::cout << this->_last->data.first << " ======" << this->_first->data.first << std::endl;
+
+            this->_last = target->parent;
+            while (target->right != NULL || target->left != NULL)
             {
-                if(target->left){
-                   target =  target->swap(target->left);
+                if (target->right){
+                    target = target->swap(target->right);
                     }
-                else if(target->right){
-                     target =  target->swap(target->right);
+                else if (target->left){
+                    target = target->swap(target->left);
                     }
-                else {
+                else
                     break;
-                    }
-                print(root);
             }
-            if(target->isLeft)
+            std::cout << "====== delete2 " << target->data.first << " ======" << std::endl;
+
+            if (target->isLeft)
                 target->parent->left = NULL;
             else
                 target->parent->right = NULL;
-        
+
             target->parent->setHeight();
 
-            balance (target->parent);
-            
-            print(root);
+            balance(target->parent);
+            if (target->data.first == this->_last->data.first)
+                this->_last = target->smallerNode();
+            if (target->data.first == this->_first->data.first)
+                this->_first = target->biggerNode();
+            delete target;
+
+            if (debugMode)
+                print(_root);
         }
+
         void l_rotation(Node *target)
         {
-            if (target->bf() < 0)
-            {
-                if (debugMode)
-                    std::cout << "## bf less then 0" << std::endl;
-                return;
-            }
             if (debugMode)
-                std::cout << "## l_rotation"  <<  target->data.first << "->" <<target->left->data.first << std::endl;
-            Node *newRoot = target->left;
-            Node *oldRoot = target;
-            if (oldRoot->parent != NULL)
+                std::cout << "## l_rotation" << target->data.first << "->" << target->left->data.first << std::endl;
+            Node *new_root = target->left;
+            Node *old_root = target;
+            if (old_root->parent != NULL)
             {
-                if (oldRoot->isLeft)
-                    oldRoot->parent->setLeft(newRoot);
+                if (old_root->isLeft)
+                    old_root->parent->setLeft(new_root);
                 else
-                    oldRoot->parent->setRight(newRoot);
+                    old_root->parent->setRight(new_root);
             }
 
-            oldRoot->setLeft(newRoot->right);
-            newRoot->parent = oldRoot->parent;
-            oldRoot->parent = newRoot;
+            old_root->setLeft(new_root->right);
+            new_root->parent = old_root->parent;
+            old_root->parent = new_root;
 
-            if (newRoot != NULL)
-                newRoot->setRight( oldRoot);
-            target = newRoot;
+            if (new_root != NULL)
+                new_root->setRight(old_root);
+            target = new_root;
 
-            if (oldRoot == root)
-                root = newRoot;
+            if (old_root == _root)
+                _root = new_root;
 
-            oldRoot->setHeight();
-            newRoot->setHeight();
+            old_root->setHeight();
+            new_root->setHeight();
         }
         void r_rotation(Node *target)
         {
-            if (target->bf() > 0)
-            {
-                if (debugMode)
-                    std::cout << "## bf bigger then 0" << std::endl;
-                return;
-            }
             if (debugMode)
-                std::cout << "## r_rotation " <<  target->data.first << "->" <<target->right->data.first << std::endl;
-            Node *newRoot = target->right;
-            Node *oldRoot = target;
+                std::cout << "## r_rotation " << target->data.first << "->" << target->right->data.first << std::endl;
+            Node *new_root = target->right;
+            Node *old_root = target;
 
             // parant's child set
-            if (oldRoot->parent != NULL)
+            if (old_root->parent != NULL)
             {
-                if (oldRoot->isLeft)
-                    oldRoot->parent->setLeft(newRoot);
+                if (old_root->isLeft)
+                    old_root->parent->setLeft(new_root);
                 else
-                    oldRoot->parent->setRight(newRoot);
+                    old_root->parent->setRight(new_root);
             }
 
-            oldRoot->setRight(newRoot->left);
-            newRoot->parent = oldRoot->parent;
-            oldRoot->parent = newRoot;
+            old_root->setRight(new_root->left);
+            new_root->parent = old_root->parent;
+            old_root->parent = new_root;
 
-            if (newRoot != NULL)
-                newRoot->setLeft(oldRoot);
-            target = newRoot;
+            if (new_root != NULL)
+                new_root->setLeft(old_root);
+            target = new_root;
 
-            if (oldRoot == root)
-                root = newRoot;
+            if (old_root == _root)
+                _root = new_root;
 
-            oldRoot->setHeight();
-            newRoot->setHeight();
+            old_root->setHeight();
+            new_root->setHeight();
         }
 
-        Node *search(Node * startNode, key_type key)
+        Node *search(Node *startNode, key_type key)
         {
-
             if (startNode == NULL)
                 return NULL;
             else if (startNode->data.first == key)
                 return startNode;
-            return search(startNode->data.first > key ? startNode->left: startNode->right, key);
+            return search(startNode->data.first > key ? startNode->left : startNode->right, key);
+        }
+
+        size_type size() const
+        {
+            return this->_size;
+        }
+        size_type max_size() const
+        {
+            return (this->_alloc.max_size() < (unsigned long)std::numeric_limits<difference_type>::max()) ? this->_alloc.max_size() : (unsigned long)std::numeric_limits<difference_type>::max();
+        }
+        void clear()
+        {
+            Node *start = this->_first;
+            while (start != NULL)
+            {
+                Node *temp = start;
+                start = start->biggerNode();
+                delete temp;
+            }
+            this->_root = NULL;
+            this->_size = 0;
+        }
+        void swap(Tree &t)
+        {
+            Tree *temp = new Tree(*this);
+            *this = t;
+            t.clear();
+            t = *temp;
+        }
+        bool operator==(const Tree &t)
+        {
+            if ((this->_root == t.base()) && (this->_size == t.size()))
+                return true;
+            return false;
+        }
+
+        Node *first() const
+        {
+            return this->_first;
+        }
+        Node *last() const
+        {
+            return this->_last;
         }
     };
+
 } // namespace ft
 #endif
