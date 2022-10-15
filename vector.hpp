@@ -16,7 +16,7 @@
 #include <initializer_list>
 #include "iterator_traits.hpp"
 #include "iterator.hpp"
-#include "lexical.hpp"
+#include "compare.hpp"
 namespace ft
 {
 
