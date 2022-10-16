@@ -88,7 +88,9 @@ namespace ft
             *this = m;
         }
 
-        ~map(){};
+        ~map(){
+            this->clear();
+        };
 
         map &operator=(const map &m)
         {
@@ -164,16 +166,14 @@ namespace ft
         {
             this->_tree.remove((*position).first);
         }
-        size_type erase(const key_type &k
-             , typename ft::enable_if<!ft::is_iterator<Tree, key_type>::value, size_type>::type * = 0)
+        size_type erase(const key_type &k)
         {
             this->_tree.remove(k);
             return this->size();
         }
 
         template <class InputIterator>
-        iterator erase(const_iterator first, const_iterator last
-             , typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0)
+        iterator erase(const_iterator first, const_iterator last)
         {
             for (InputIterator iter = first; iter != last; iter++)
             {
