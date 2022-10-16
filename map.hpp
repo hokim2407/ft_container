@@ -25,7 +25,8 @@ namespace ft
 {
 
     template <class Key, class T, class Compare = std::less<Key>,
-              class Allocator = std::allocator<ft::pair<const Key, T>>>
+              class Allocator = std::allocator<ft::pair<const Key, T> > 
+              >
     class map
     {
     public:
@@ -98,29 +99,29 @@ namespace ft
         }
 
         // iterators:
-        iterator begin() noexcept
+        iterator begin() 
         {
             return iterator(&(this->_tree));
         }
-        const_iterator begin() const noexcept;
-        iterator end() noexcept;
-        const_iterator end() const noexcept;
+        const_iterator begin() const ;
+        iterator end() ;
+        const_iterator end() const ;
 
-        reverse_iterator rbegin() noexcept;
-        const_reverse_iterator rbegin() const noexcept;
-        reverse_iterator rend() noexcept;
-        const_reverse_iterator rend() const noexcept;
+        reverse_iterator rbegin() ;
+        const_reverse_iterator rbegin() const ;
+        reverse_iterator rend() ;
+        const_reverse_iterator rend() const ;
 
         // capacity:
-        bool empty() const noexcept
+        bool empty() const 
         {
             return this->_tree.size() == 0;
         }
-        size_type size() const noexcept
+        size_type size() const 
         {
             return this->_tree.size();
         }
-        size_type max_size() const noexcept
+        size_type max_size() const 
         {
             return this->_tree.max_size();
         }
@@ -130,11 +131,6 @@ namespace ft
         {
             return this->_tree.search(this->_tree.base(), k);
         }
-        mapped_type &operator[](key_type &&k)
-        {
-            return this->_tree.search(this->_tree.base(), k);
-        }
-
         // modifiers:
         // pair<iterator, bool>
         value_type insert(const value_type &v)
@@ -176,7 +172,7 @@ namespace ft
                 this->_tree.remove((*iter).first);
             }
         }
-        void clear() noexcept
+        void clear() 
         {
             this->_tree.clear();
         }
@@ -187,7 +183,7 @@ namespace ft
         }
 
         // observers:
-        allocator_type get_allocator() const noexcept
+        allocator_type get_allocator() const 
         {
             return this->_alloc;
         }
@@ -247,7 +243,9 @@ namespace ft
     // specialized algorithms:
     template <class Key, class T, class Compare, class Allocator>
     void
-    swap(map<Key, T, Compare, Allocator> &x, map<Key, T, Compare, Allocator> &y) noexcept(noexcept(x.swap(y)));
+    swap(map<Key, T, Compare, Allocator> &x, map<Key, T, Compare, Allocator> &y) {
+        x.swap(y);
+        };
 
 } // namespace ft
 
