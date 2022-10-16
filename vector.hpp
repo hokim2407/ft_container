@@ -260,7 +260,8 @@ namespace ft
             return position;
         }
         void insert(iterator position, size_type n, const value_type &x
-          , typename ft::enable_if<ft::is_integral<size_type>::value, size_type>::type * = 0)
+          , typename ft::enable_if<ft::is_integral<size_type>::value, size_type>::type * = 0
+          )
         {
             // find iter index
             size_type start = position.base() - this->_begin;

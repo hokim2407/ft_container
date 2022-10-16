@@ -20,6 +20,7 @@
 #include "avl.hpp"
 #include "pair.hpp"
 #include "map_iterator.hpp"
+#include "utils.hpp"
 
 namespace ft
 {
@@ -74,7 +75,10 @@ namespace ft
 
         template <class InputIterator>
         map(InputIterator first, InputIterator last,
-            const key_compare &comp, const allocator_type &a) : _tree(comp, a), _alloc(a), _key_comp(comp)
+            const key_compare &comp, const allocator_type &a
+             , typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0
+          
+            ) : _tree(comp, a), _alloc(a), _key_comp(comp)
         {
             this->_value_comp = value_compare();
             this->insert(first, last);
@@ -138,14 +142,16 @@ namespace ft
             this->_tree.insert(v);
             return _tree.search(this->_tree.base(), v.first)->data;
         }
-        iterator insert(const_iterator position, const value_type &v)
+        iterator insert(const_iterator position, const value_type &v
+             , typename ft::enable_if<!ft::is_iterator<Tree, value_type>::value, size_type>::type * = 0)
         {
             this->_tree.insert(v);
             if (position != NULL)
                 return;
         }
         template <class InputIterator>
-        void insert(InputIterator first, InputIterator last)
+        void insert(InputIterator first, InputIterator last
+             , typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0)
         {
 
             for (InputIterator iter = first; iter != last; iter++)
@@ -158,14 +164,16 @@ namespace ft
         {
             this->_tree.remove((*position).first);
         }
-        size_type erase(const key_type &k)
+        size_type erase(const key_type &k
+             , typename ft::enable_if<!ft::is_iterator<Tree, key_type>::value, size_type>::type * = 0)
         {
             this->_tree.remove(k);
             return this->size();
         }
 
         template <class InputIterator>
-        iterator erase(const_iterator first, const_iterator last)
+        iterator erase(const_iterator first, const_iterator last
+             , typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0)
         {
             for (InputIterator iter = first; iter != last; iter++)
             {

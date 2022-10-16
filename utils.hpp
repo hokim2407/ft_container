@@ -2,6 +2,8 @@
 
 #ifndef UTILS_HPP
 #define UTILS_HPP
+#include "map_iterator.hpp"
+#include "iterator.hpp"
 
 namespace ft
 {
@@ -29,6 +31,23 @@ namespace ft
     };
     template <>
     struct is_integral<size_t>
+    {
+        static const bool value = true;
+    };
+
+    template <class , class ITER = void>
+    struct is_iterator
+    {
+        static const bool value = false;
+    };
+
+    template <class T>
+    struct is_iterator<T, ft::iterator<T> > 
+    {
+        static const bool value = true;
+    };
+    template <class T>
+    struct is_iterator<T, ft::map_iterator<T> >
     {
         static const bool value = true;
     };
