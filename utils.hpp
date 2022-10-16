@@ -5,8 +5,7 @@
 
 namespace ft
 {
-
-    template <bool B, class T = void>
+    template <bool Cond, class T = void>
     struct enable_if
     {
     };
@@ -20,13 +19,18 @@ namespace ft
     template <class>
     struct is_integral
     {
-        static const bool value = true;
+        static const bool value = false;
     };
 
     template <>
     struct is_integral<int>
     {
-        static const bool value = false;
+        static const bool value = true;
+    };
+    template <>
+    struct is_integral<size_t>
+    {
+        static const bool value = true;
     };
 } // namespace ft
 

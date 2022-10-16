@@ -17,6 +17,7 @@
 #include "iterator_traits.hpp"
 #include "iterator.hpp"
 #include "compare.hpp"
+#include "utils.hpp"
 namespace ft
 {
 
@@ -55,7 +56,9 @@ namespace ft
             this->_begin = this->_alloc.allocate(0);
         }
 
-        vector(size_type n, const value_type &value = value_type(), const allocator_type &alloc = allocator_type())
+        vector(size_type n, const value_type &value = value_type(), const allocator_type &alloc = allocator_type()
+       , typename ft::enable_if<ft::is_integral<size_type>::value, size_type>::type * = 0
+        )
             : _alloc(alloc), _size(0), _capa(n)
         {
             this->_begin = this->_alloc.allocate(n);
@@ -64,7 +67,9 @@ namespace ft
         }
 
         template <class InputIterator>
-        vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type())
+        vector(InputIterator first, InputIterator last, const allocator_type & alloc = allocator_type()
+         , typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0
+        )
          :  _size(0), _capa(0), _alloc(alloc)
         {
             this->_capa= last.base()-first.base();
@@ -130,19 +135,19 @@ namespace ft
 
         reverse_iterator rbegin() {
 
-            return  reverse_iterator(this->end());
+            return  reverse_iterator(this->end()-1);
         }
         const_reverse_iterator rbegin() const {
             
-            return  const_reverse_iterator(this->end());
+            return  const_reverse_iterator(this->end()-1);
         }
         reverse_iterator rend() {
             
-            return  reverse_iterator(this->begin());
+            return  reverse_iterator(this->begin() - 1);
         }
         const_reverse_iterator rend() const {
             
-            return  const_reverse_iterator(this->begin());
+            return  const_reverse_iterator(this->begin() - 1);
         }
 
         // // capacity:
@@ -213,9 +218,9 @@ namespace ft
         }
 
         // // modifiers:
-        // TODO: enable if
         template <class InputIterator>
-        void assign(InputIterator first, InputIterator last)
+        void assign(InputIterator first, InputIterator last,
+         typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
         {
             this->clear();
             if (this->_capa < last - first)
@@ -225,7 +230,8 @@ namespace ft
                 this->push_back(*first);
             }
         }
-        void assign(size_type n, const value_type &u){
+        void assign(size_type n, const value_type &u
+          , typename ft::enable_if<ft::is_integral<size_type>::value, size_type>::type * = 0){
             if (this->_capa < n)
                 this->reserve(n);
 
@@ -245,14 +251,16 @@ namespace ft
             if(empty())
                 return;
             this->_size--;
-            this->_alloc.destroy(&this->_begin[this->_size]);
+            this->_alloc.destroy(&this->_begin[this->_size - 1]);
         }
 
-        iterator insert(const_iterator position, const value_type &x){
-            
-            return insert( position, 1, x);
+        iterator insert(iterator position, const value_type &x){
+            // find iter index
+            insert( position, 1, x);
+            return position;
         }
-        iterator insert(const_iterator position, size_type n, const value_type &x)
+        void insert(iterator position, size_type n, const value_type &x
+          , typename ft::enable_if<ft::is_integral<size_type>::value, size_type>::type * = 0)
         {
             // find iter index
             size_type start = position.base() - this->_begin;
@@ -274,8 +282,35 @@ namespace ft
                 this->_alloc.construct(&this->_begin[i], x);
             }
             this->_size += n;
-            return (this->_begin + start);
         }
+        // TODO: enable if 추가
+        template <class InputIterator>    
+        void insert (iterator position, InputIterator first, InputIterator last
+                      , typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0
+        
+        ){
+            size_type n = last - first;
+            // find iter index
+            size_type start = position.base() - this->_begin;
+            
+            if (size() + n >= capacity())
+                reserve(capacity() + n);
+
+            // move data to back
+            for (size_type i = size() - 1; i >= start; i--)
+            {
+                this->_alloc.destroy(&this->_begin[i + n]);
+                this->_alloc.construct(&this->_begin[i + n], this->_begin[i]);
+            }
+
+            // push new values
+            for (size_type i = start; i < start + n; i++, first++)
+            {
+                this->_alloc.destroy(&this->_begin[i]);
+                this->_alloc.construct(&this->_begin[i], *first);
+            }
+            this->_size += n;
+        };
 
         iterator erase(const_iterator position){
            return erase(position, position + 1);
@@ -295,7 +330,6 @@ namespace ft
             
             return this->_begin + idx;
         }
-
         void clear(){
             for (size_type i = 0; i < this->_size; i++)
                 this->_alloc.destroy(&this->_begin[i]);
@@ -330,6 +364,10 @@ namespace ft
             v._size = tmpSize;
             v._capa = tmpCapa;
         }
+        allocator_type get_allocator() const{
+            return this->_alloc;
+        };
+
 
     };
 
