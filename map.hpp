@@ -44,12 +44,12 @@ namespace ft
         typedef typename allocator_type::size_type size_type;
         typedef typename allocator_type::difference_type difference_type;
 
-        typedef ft::Tree<Key, T> Tree;
+        typedef typename ft::Tree<Key, T> Tree;
 
-        typedef ft::map_iterator<Tree> iterator;
-        typedef const_pointer const_iterator;
-        typedef ft::reverse_iterator<iterator> reverse_iterator;
-        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+        typedef typename ft::map_iterator<Tree> iterator;
+        typedef typename ft::const_map_iterator<Tree> const_iterator;
+        typedef typename ft::reverse_map_iterator<iterator> reverse_iterator;
+        typedef typename ft::const_map_iterator<const_iterator> const_reverse_iterator;
 
         class value_compare
             : public std::binary_function<value_type, value_type, bool>
@@ -109,14 +109,35 @@ namespace ft
         {
             return iterator(&(this->_tree));
         }
-        const_iterator begin() const ;
-        iterator end() ;
-        const_iterator end() const ;
+        const_iterator begin() const 
+        {
+            return const_iterator(&(this->_tree));
+        }
+        iterator end() 
+        {
+            return iterator(&(this->_tree),this->_tree.end());
+        }
+        const_iterator end() const 
+        {
+            return const_iterator(&(this->_tree),this->_tree.end());
+        }
 
-        reverse_iterator rbegin() ;
-        const_reverse_iterator rbegin() const ;
-        reverse_iterator rend() ;
-        const_reverse_iterator rend() const ;
+        reverse_iterator rbegin() 
+        {
+            return reverse_iterator(&(this->_tree),this->_tree.last());
+        }
+        const_reverse_iterator rbegin() const 
+        {
+            return const_reverse_iterator(&(this->_tree),this->_tree.last());
+        }
+        reverse_iterator rend() 
+        {
+            return reverse_iterator(&(this->_tree),this->_tree.end());
+        }
+        const_reverse_iterator rend() const 
+        {
+            return const_reverse_iterator(&(this->_tree),this->_tree.end());
+        }
 
         // capacity:
         bool empty() const 
@@ -206,7 +227,8 @@ namespace ft
 
         // map operations:
         iterator find(const key_type &k){
-            return iterator(this->_tree.search(this->_tree.base(),k));
+            
+            return iterator(&(this->_tree), this->_tree.search(this->_tree.base(),k));
         }
         const_iterator find(const key_type &k) const{
             return  find(k);

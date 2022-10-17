@@ -17,15 +17,35 @@ void printAll(std::map<std::string, int> &std_m, ft::map<std::string, int> &ft_m
 
     std::cout << "ft === size: " << ft_m.size() << ", max_size:" << ft_m.max_size() << std::endl;
     ft::map<std::string, int>::iterator ft_iter = ft_m.begin();
+    std::map<std::string, int>::iterator iter = std_m.begin();
     std::cout << "\tstd\t|\tft\t|"<<std::endl;
     std::cout << "\t---\t|\t---\t|"<<std::endl;
         
-    for (std::map<std::string, int>::iterator iter = std_m.begin(); iter != std_m.end(); iter++)
+    for (; ft_iter != ft_m.end(); ft_iter++)
     {
         std::cout << "\t"<< iter->first << ":" << iter->second <<"\t|" ;
         std::cout << "\t"<< ft_iter->first << ":" << ft_iter->second <<"\t|"<<std::endl;
-        ft_iter++;
+        iter++;
     }
+
+
+
+    // std::cout << "=====" << header << "=====" << std::endl;
+
+    // std::cout << "std === size: " << std_m.size() << ", max_size:" << std_m.max_size() << std::endl;
+
+    // std::cout << "ft === size: " << ft_m.size() << ", max_size:" << ft_m.max_size() << std::endl;
+    // std::map<std::string, int>::reverse_iterator iter = std_m.rbegin();
+    // std::cout << "\tstd\t|\tft\t|"<<std::endl;
+    // std::cout << "\t---\t|\t---\t|"<<std::endl;
+        
+    // for (ft::map<std::string, int>::reverse_iterator ft_iter = ft_m.rbegin(); ft_iter != ft_m.rend(); ft_iter++)
+    // {
+    //     std::cout << "\t"<< iter->first << ":" << iter->second <<"\t|" ;
+    //     std::cout << "\t"<< ft_iter->first << ":" << ft_iter->second <<"\t|"<<std::endl;
+    //     iter++;
+    // }
+    // std::cout << "-" << std::endl;
     std::cout << "-" << std::endl;
 }
 

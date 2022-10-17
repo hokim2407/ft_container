@@ -22,6 +22,9 @@ namespace ft
         bool isLeft;
 
     public:
+        Node()
+        {
+        }
         Node(T &d) : data(d)
         {
             left = NULL;
@@ -34,12 +37,12 @@ namespace ft
         }
         Node &operator=(const Node &n)
         {
-            data = n->data;
-            left = n->left;
-            right = n->right;
-            parent = n->parent;
-            height = n->height;
-            isLeft = n->isLeft;
+            data = n.data;
+            left = n.left;
+            right = n.right;
+            parent = n.parent;
+            height = n.height;
+            isLeft = n.isLeft;
             return *this;
         }
         Node *biggerNode()
@@ -66,6 +69,10 @@ namespace ft
                     ptr = ptr->parent;
                 }
             }
+            else
+            {
+                ptr = NULL;
+            }
             return ptr;
         }
         Node *smallerNode()
@@ -78,7 +85,7 @@ namespace ft
             else
             {
                 key_type key = ptr->data.first;
-                while (ptr != NULL && key < ptr->data.first)
+                while (ptr->parent != NULL)
                 {
                     ptr = ptr->parent;
                 }
@@ -156,8 +163,7 @@ namespace ft
     template <class Key,
               class T,
               class Compare = std::less<Key>,
-              class Alloc = std::allocator<ft::pair<const Key, T> >
-              >
+              class Alloc = std::allocator<ft::pair<const Key, T>>>
     class Tree
     {
     public:
@@ -180,13 +186,16 @@ namespace ft
         allocator_type _alloc;
         Node *_first;
         Node *_last;
+        Node *_end;
         // typename allocator_type::template rebind<Node>::other _node_allocator;
     public:
         Tree(const key_compare &key_comp = key_compare(), const allocator_type &alloc = allocator_type(), bool debug = true)
             : debugMode(debug), _root(NULL), _size(0), _key_comp(key_comp), _alloc(alloc)
         {
-            this->_first = NULL;
-            this->_last = NULL;
+            this->_end = new Node();
+            setFirst(this->_end);
+            setLast(this->_end);
+
 
             if (debugMode)
                 std::cout << "in" << std::endl;
@@ -195,8 +204,6 @@ namespace ft
         Tree(Tree &t, const key_compare &key_comp = key_compare(), const allocator_type &alloc = allocator_type(), bool debug = true)
             : _root(NULL), _key_comp(key_comp), _alloc(alloc), debugMode(debug)
         {
-            this->_first = t.first();
-            this->_last = t.last();
             *this = t;
         };
         Tree &operator=(const Tree &t)
@@ -206,9 +213,10 @@ namespace ft
             this->_key_comp = t.get_key_comp();
             this->_alloc = t.get_alloc();
             this->_size = t.size();
-
-            this->_first = t.first();
-            this->_last = t.last();
+            setFirst( t.first());
+            setLast(t.last());
+            delete this->_end;
+            this->_end = t.end();
             return *this;
         }
         Node *base()
@@ -273,8 +281,8 @@ namespace ft
             if (_root == NULL)
             {
                 _root = newNode;
-                this->_first = newNode;
-                this->_last = newNode;
+                setFirst(newNode);
+                setLast(newNode);
                 return;
             }
             Node *parnetNode = findParent(_root, newNode);
@@ -284,12 +292,12 @@ namespace ft
                 parnetNode->setLeft(newNode);
             else
                 parnetNode->setRight(newNode);
-            balance(newNode);
 
             if (newNode->data.first < this->_first->data.first)
-                this->_first = newNode;
+                setFirst(newNode);
             if (newNode->data.first > this->_last->data.first)
-                this->_last = newNode;
+                setLast(newNode);
+            balance(newNode);
             if (debugMode)
                 print(_root);
         }
@@ -299,13 +307,13 @@ namespace ft
             {
                 if (node->bf() > 1)
                 {
-                    if (node->left && node->left->right)
+                    if (node->left && node->left->right && node->left->right == NULL)
                         r_rotation(node->left);
                     l_rotation(node);
                 }
                 else if (node->bf() < -1)
                 {
-                    if (node->right && node->right->left)
+                    if (node->right && node->right->left && node->right->right == NULL)
                         l_rotation(node->right);
                     r_rotation(node);
                 }
@@ -321,18 +329,20 @@ namespace ft
             if (debugMode)
                 std::cout << "====== delete " << target->data.first << " ======" << std::endl;
 
-
             std::cout << this->_last->data.first << " ======" << this->_first->data.first << std::endl;
 
-            this->_last = target->parent;
+
+            setLast(target->parent);
             while (target->right != NULL || target->left != NULL)
             {
-                if (target->right){
+                if (target->right)
+                {
                     target = target->swap(target->right);
-                    }
-                else if (target->left){
+                }
+                else if (target->left)
+                {
                     target = target->swap(target->left);
-                    }
+                }
                 else
                     break;
             }
@@ -346,10 +356,8 @@ namespace ft
             target->parent->setHeight();
 
             balance(target->parent);
-            if (target->data.first == this->_last->data.first)
-                this->_last = target->smallerNode();
-            if (target->data.first == this->_first->data.first)
-                this->_first = target->biggerNode();
+            searchSmallest();
+            searchbiggest();
             delete target;
 
             if (debugMode)
@@ -359,7 +367,7 @@ namespace ft
         void l_rotation(Node *target)
         {
             if (debugMode)
-                std::cout << "## l_rotation" << target->data.first << "->" << target->left->data.first << std::endl;
+                std::cout << "## l_rotation " << target->data.first << "->" << target->left->data.first << std::endl;
             Node *new_root = target->left;
             Node *old_root = target;
             if (old_root->parent != NULL)
@@ -424,6 +432,29 @@ namespace ft
             return search(startNode->data.first > key ? startNode->left : startNode->right, key);
         }
 
+        Node *searchSmallest()
+        {
+            Node *result = this->_root;
+            while (result->left)
+            {
+                result = result->left;
+            }
+
+            setFirst(result);
+            return result;
+        }
+
+        Node *searchbiggest()
+        {
+            Node *result = this->_root;
+            while (result->right)
+            {
+                result = result->right;
+            }
+            setLast(result);
+            return result;
+        }
+
         size_type size() const
         {
             return this->_size;
@@ -464,6 +495,26 @@ namespace ft
         }
         Node *last() const
         {
+            return this->_last;
+        }
+        Node *end() const
+        {
+            return (this->_end);
+        }
+
+        Node *setFirst(Node *first) 
+        {
+            // _rend ++ = _first
+            // _end -- = _first
+            this->_first = first;
+            this->_end->left = this->_first;
+            return this->_first;
+        }
+        Node *setLast(Node *last) 
+        {
+            // _end ++ = _last
+            this->_last = last;
+            this->_end->right = this->_last;
             return this->_last;
         }
     };

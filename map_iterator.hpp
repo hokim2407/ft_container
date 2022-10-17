@@ -15,18 +15,18 @@ namespace ft
         typedef typename T::mapped_type mapped_type;
 
     private:
-        Node *ptr;
+        Node *_ptr;
+        T *_tree;
 
     public:
         map_iterator(){};
         ~map_iterator(){};
-        map_iterator(T *tree)
+        map_iterator(T *tree): _tree(tree)
         {
-            this->ptr = tree->first();
+            this->_ptr = tree->first();
         }
-        map_iterator(Node *node)
+        map_iterator(T *tree,Node *node): _ptr(node), _tree(tree)
         {
-            this->ptr = node;
         }
         map_iterator(const map_iterator &it)
         {
@@ -34,18 +34,20 @@ namespace ft
         }
         map_iterator &operator=(const map_iterator &it)
         {
-            this->ptr = it.base();
+            this->_tree = it.tree();
+            this->_ptr = it.base();
             return *this;
         }
-        Node *base() const { return this->ptr; }
-        Node &operator*() { return (this->ptr->data); }
-        value_type *operator->() { return &(this->ptr->data); }
-        bool operator==(const map_iterator &it) { return (this->ptr == it.base()); }
-        bool operator!=(const map_iterator &it) { return (this->ptr != it.base()); }
-        bool operator<(const map_iterator &it) { return (this->ptr < it.base()); }
-        bool operator<=(const map_iterator &it) { return (this->ptr <= it.base()); }
-        bool operator>=(const map_iterator &it) { return (this->ptr >= it.base()); }
-        bool operator>(const map_iterator &it) { return (this->ptr > it.base()); }
+        T *tree() const { return this->_tree; }
+        Node *base() const { return this->_ptr; }
+        Node &operator*() { return (this->_ptr->data); }
+        value_type *operator->() { return &(this->_ptr->data); }
+        bool operator==(const map_iterator &it) { return (this->_ptr == it.base()); }
+        bool operator!=(const map_iterator &it) { return (this->_ptr != it.base()); }
+        bool operator<(const map_iterator &it) { return (this->_ptr < it.base()); }
+        bool operator<=(const map_iterator &it) { return (this->_ptr <= it.base()); }
+        bool operator>=(const map_iterator &it) { return (this->_ptr >= it.base()); }
+        bool operator>(const map_iterator &it) { return (this->_ptr > it.base()); }
 
         map_iterator operator++()
         {
@@ -55,7 +57,10 @@ namespace ft
 
         map_iterator operator++(int)
         {
-            this->ptr = this->ptr->biggerNode();
+            if(this->_ptr == this->_tree->last())
+                this->_ptr = this->_tree->end();
+            else
+                this->_ptr = this->_ptr->biggerNode();
             return *this;
         }
         map_iterator operator--()
@@ -66,47 +71,13 @@ namespace ft
         map_iterator operator--(int)
         {
 
-            this->ptr = this->ptr->smallerNode();
+            if(this->_ptr == this->tree->first())
+                this->_ptr = this->_tree->end();
+            else
+                this->_ptr = this->_ptr->smallerNode();
             return *this;
         }
-        // map_iterator operator+(int n)
-        // {
-        //     return (map_iterator(this->base() + n));
-        // }
-        // map_iterator &operator+=(int n)
-        // {
-        //     ptr += n;
-        //     return (*this);
-        // }
-        // int operator-(map_iterator &it)
-        // {
-        //     return (*this->ptr - it.base());
-        // }
-        // map_iterator operator-(int n)
-        // {
-        //     return (map_iterator(this->base() - n));
-        // }
-        // map_iterator &operator-=(int n)
-        // {
-        //     ptr -= n;
-        //     return (*this);
-        // }
-        T &operator[](key_type key)
-        {
-            Node *tmp = this->ptr;
-            while (tmp->parent == NULL)
-                tmp = tmp->parent;
-            while (tmp && tmp->data.first != key)
-            {
-                if (key < tmp->data.first)
-                    tmp = tmp->left;
-                else if (key > tmp->data.first)
-                    tmp = tmp->left;
-                else
-                    return tmp;
-            }
-            return NULL;
-        }
+
     };
 
     template <class T>
@@ -122,36 +93,40 @@ namespace ft
         typedef typename T::mapped_type mapped_type;
 
     private:
-        const Node *ptr;
+        const Node *_ptr;
+        T *_tree;
 
     public:
         const_map_iterator(){};
         ~const_map_iterator(){};
-        const_map_iterator(const T *tree) 
+        const_map_iterator(const T *tree) : _tree(tree)
         {
-            this->ptr = tree->first();
+            this->_ptr = tree->first();
         }
-        const_map_iterator(const Node *v) : ptr(v)
+        const_map_iterator(const T *tree, const Node *node) : _ptr(node), _tree(tree)
         {
         }
-        const_map_iterator(const map_iterator &it) : ptr(it.base())
+        const_map_iterator(const map_iterator &it) : _ptr(it.base())
         {
+            *this = it;
         }
         const_map_iterator &operator=(const const_map_iterator &it)
         {
-            ptr = it.base();
+            this->_tree = it.tree();
+            this->_ptr = it.base();
             return *this;
         }
-        const Node *base() const { return ptr; }
-        Node &operator*() { return (this->ptr->data); }
-        value_type *operator->() { return &(this->ptr->data); }
+        T *tree() const { return this->_tree; }
+        const Node *base() const { return _ptr; }
+        Node &operator*() { return (this->_ptr->data); }
+        value_type *operator->() { return &(this->_ptr->data); }
 
-        bool operator==(const const_map_iterator &it) { return (this->ptr == it.base()); }
-        bool operator!=(const const_map_iterator &it) { return (this->ptr != it.base()); }
-        bool operator<(const const_map_iterator &it) { return (this->ptr < it.base()); }
-        bool operator<=(const const_map_iterator &it) { return (this->ptr <= it.base()); }
-        bool operator>=(const const_map_iterator &it) { return (this->ptr >= it.base()); }
-        bool operator>(const const_map_iterator &it) { return (this->ptr > it.base()); }
+        bool operator==(const const_map_iterator &it) { return (this->_ptr == it.base()); }
+        bool operator!=(const const_map_iterator &it) { return (this->_ptr != it.base()); }
+        bool operator<(const const_map_iterator &it) { return (this->_ptr < it.base()); }
+        bool operator<=(const const_map_iterator &it) { return (this->_ptr <= it.base()); }
+        bool operator>=(const const_map_iterator &it) { return (this->_ptr >= it.base()); }
+        bool operator>(const const_map_iterator &it) { return (this->_ptr > it.base()); }
 
         const_map_iterator operator++()
         {
@@ -160,95 +135,96 @@ namespace ft
         }
         const_map_iterator operator++(int)
         {
-            (*this)--;
+            if(this->_ptr == this->_tree->last())
+                this->_ptr = this->_tree->end();
+            else
+                this->_ptr = this->_ptr->biggerNode();
             return *this;
         }
         const_map_iterator operator--()
         {
-            ptr--;
+            _ptr--;
             return (*this);
         }
         const_map_iterator operator--(int)
         {
-            this->ptr = this->ptr->smallerNode();
+            if(this->_ptr == this->tree->first())
+                this->_ptr = this->_tree->end();
+            else
+                this->_ptr = this->_ptr->smallerNode();
             return *this;
         }
 
-        T &operator[](key_type key)
-        {
-            Node *tmp = this->ptr;
-            while (tmp->parent == NULL)
-                tmp = tmp->parent;
-            while (tmp && tmp->data.first != key)
-            {
-                if (key < tmp->data.first)
-                    tmp = tmp->left;
-                else if (key > tmp->data.first)
-                    tmp = tmp->left;
-                else
-                    return tmp;
-            }
-            return NULL;
-        }
+
     };
-    template <class T>
+
+    template <class IT>
     class reverse_map_iterator
     {
     public:
-        typedef ft::map_iterator<T> map_iterator;
+        typedef IT iterator;
 
     private:
-        map_iterator current;
+        iterator current;
 
     public:
         reverse_map_iterator(){};
-        reverse_map_iterator(const T *tree)
+        reverse_map_iterator(const IT *v)
         {
-            current = map_iterator(tree->last());
+            current = iterator(v);
         }
-        reverse_map_iterator(map_iterator &it)
+        reverse_map_iterator(iterator &it)
         {
             current = it.base();
         }
-        explicit reverse_map_iterator(map_iterator it)
+        explicit reverse_map_iterator(iterator it)
         {
             current = it;
         }
-        map_iterator base() const
+        iterator base() const
         {
             return (current);
         }
-        T &operator*()
+        IT &operator*()
         {
-            return (current.base()->data);
+            return (*(current - 1));
         }
-        T *operator->()
+        IT *operator->()
         {
-            return (current.base()->data);
+            return (current);
         }
-
+        reverse_map_iterator operator+(int n) { return (reverse_map_iterator(base() - n)); }
+        reverse_map_iterator operator-(int n) { return (reverse_map_iterator(base() + n)); }
         reverse_map_iterator operator++() { return (reverse_map_iterator(--current)); }
         reverse_map_iterator operator++(int) { return (reverse_map_iterator(--current)); }
         reverse_map_iterator operator--() { return (reverse_map_iterator(++current)); }
         reverse_map_iterator operator--(int) { return (reverse_map_iterator(++current)); }
-
         bool operator==(const reverse_map_iterator &it) { return (this->ptr == it.base()); }
         bool operator!=(const reverse_map_iterator &it) { return (this->ptr != it.base()); }
         bool operator<(const reverse_map_iterator &it) { return (this->ptr < it.base()); }
         bool operator<=(const reverse_map_iterator &it) { return (this->ptr <= it.base()); }
         bool operator>=(const reverse_map_iterator &it) { return (this->ptr >= it.base()); }
         bool operator>(const reverse_map_iterator &it) { return (this->ptr > it.base()); }
-
+        reverse_map_iterator &operator+=(int n)
+        {
+            current -= n;
+            return (*this);
+        }
+        reverse_map_iterator &operator-=(int n)
+        {
+            current += n;
+            return (*this);
+        }
     };
-    template <class T>
+    template <class IT>
     class const_reverse_map_iterator
     {
     public:
-        typedef ft::const_map_iterator<T> const_map_iterator;
-        typedef ft::reverse_map_iterator<T> reverse_map_iterator;
+        typedef ft::const_map_iterator<IT> const_iterator;
+        typedef ft::reverse_map_iterator<IT> reverse_map_iterator;
 
     private:
-        const_map_iterator current;
+        const_iterator current;
 
     public:
         const_reverse_map_iterator(){};
@@ -256,44 +232,53 @@ namespace ft
         {
             it;
         }
-        const_reverse_map_iterator(const T *tree)
+        const_reverse_map_iterator(const IT *v)
         {
-            current = const_map_iterator(tree->last());
+            current = const_iterator(v);
         }
         const_reverse_map_iterator &operator=(const const_reverse_map_iterator &it)
         {
             current = it.base();
             return *this;
         }
-        explicit const_reverse_map_iterator(const_map_iterator it)
+        explicit const_reverse_map_iterator(const_iterator it)
         {
             current = it;
         }
-        const_map_iterator base() const
+        const_iterator base() const
         {
             return (current);
         }
-        T &operator*()
+        const IT operator*()
         {
-            return (current.base()->data);
+            return (*(current - 1));
         }
-        T *operator->()
+        const IT *operator->()
         {
-            return (current.base()->data);
+            return (current - 1);
         }
-        
-        const_reverse_map_iterator operator++() { return (const_reverse_map_iterator(--current)); }
-        const_reverse_map_iterator operator++(int) { return (const_reverse_map_iterator(--current)); }
-        const_reverse_map_iterator operator--() { return (const_reverse_map_iterator(++current)); }
-        const_reverse_map_iterator operator--(int) { return (const_reverse_map_iterator(++current)); }
-
+        const_reverse_map_iterator operator+(int n) { return (const_reverse_map_iterator(base() - n)); }
+        const_reverse_map_iterator operator-(int n) { return (const_reverse_map_iterator(base() + n)); }
         bool operator==(const const_reverse_map_iterator &it) { return (this->ptr == it.base()); }
         bool operator!=(const const_reverse_map_iterator &it) { return (this->ptr != it.base()); }
         bool operator<(const const_reverse_map_iterator &it) { return (this->ptr < it.base()); }
         bool operator<=(const const_reverse_map_iterator &it) { return (this->ptr <= it.base()); }
         bool operator>=(const const_reverse_map_iterator &it) { return (this->ptr >= it.base()); }
-
+        bool operator>(const const_reverse_map_iterator &it) { return (this->ptr > it.base()); }
+        const_reverse_map_iterator &operator+=(int n)
+        {
+            current -= n;
+            return (*this);
+        }
+        const_reverse_map_iterator &operator-=(int n)
+        {
+            current += n;
+            return (*this);
+        }
     };
+
+
+
 } // namespace ft
 
 #endif

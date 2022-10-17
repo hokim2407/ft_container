@@ -7,7 +7,7 @@ NAME = data
 
 RM = rm -f
 
-SRCS = main.cpp
+SRCS = main_map.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
