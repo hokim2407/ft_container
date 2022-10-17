@@ -189,11 +189,11 @@ namespace ft
         }
         T &operator*()
         {
-            return (*(current - 1));
+            return (this->current).operator*();
         }
         T *operator->()
         {
-            return (current);
+            return (this->current).operator->();
         }
         reverse_iterator operator+(int n) { return (reverse_iterator(base() - n)); }
         reverse_iterator operator-(int n) { return (reverse_iterator(base() + n)); }

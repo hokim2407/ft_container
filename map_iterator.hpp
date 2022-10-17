@@ -7,6 +7,7 @@ namespace ft
     template <class T> //tree
     class map_iterator
     {
+    public:
         typedef typename T::Node Node;
         typedef typename T::key_type key_type;
         typedef typename T::value_type value_type;
@@ -71,7 +72,7 @@ namespace ft
         map_iterator operator--(int)
         {
 
-            if(this->_ptr == this->tree->first())
+            if(this->_ptr == this->_tree->first())
                 this->_ptr = this->_tree->end();
             else
                 this->_ptr = this->_ptr->smallerNode();
@@ -163,6 +164,7 @@ namespace ft
     {
     public:
         typedef IT iterator;
+        typedef typename IT::value_type value_type;
 
     private:
         iterator current;
@@ -171,50 +173,42 @@ namespace ft
         reverse_map_iterator(){};
         reverse_map_iterator(const IT *v)
         {
-            current = iterator(v);
+            this->current = iterator(v);
         }
         reverse_map_iterator(iterator &it)
         {
-            current = it.base();
+            this->current = it.base();
         }
         explicit reverse_map_iterator(iterator it)
         {
-            current = it;
+            this->current = it;
         }
         iterator base() const
         {
-            return (current);
+            return (this->current);
         }
         IT &operator*()
         {
-            return (*(current - 1));
+            return (*(this->current - 1));
         }
-        IT *operator->()
+        value_type *operator->()
         {
-            return (current);
+            return (this->current).operator->();
+           // return (this->current);
         }
         reverse_map_iterator operator+(int n) { return (reverse_map_iterator(base() - n)); }
         reverse_map_iterator operator-(int n) { return (reverse_map_iterator(base() + n)); }
-        reverse_map_iterator operator++() { return (reverse_map_iterator(--current)); }
-        reverse_map_iterator operator++(int) { return (reverse_map_iterator(--current)); }
-        reverse_map_iterator operator--() { return (reverse_map_iterator(++current)); }
-        reverse_map_iterator operator--(int) { return (reverse_map_iterator(++current)); }
-        bool operator==(const reverse_map_iterator &it) { return (this->ptr == it.base()); }
-        bool operator!=(const reverse_map_iterator &it) { return (this->ptr != it.base()); }
-        bool operator<(const reverse_map_iterator &it) { return (this->ptr < it.base()); }
-        bool operator<=(const reverse_map_iterator &it) { return (this->ptr <= it.base()); }
-        bool operator>=(const reverse_map_iterator &it) { return (this->ptr >= it.base()); }
-        bool operator>(const reverse_map_iterator &it) { return (this->ptr > it.base()); }
-        reverse_map_iterator &operator+=(int n)
-        {
-            current -= n;
-            return (*this);
-        }
-        reverse_map_iterator &operator-=(int n)
-        {
-            current += n;
-            return (*this);
-        }
+        reverse_map_iterator operator++() { return (reverse_map_iterator(--(this->current))); }
+        reverse_map_iterator operator++(int) { return (reverse_map_iterator(--(this->current))); }
+        reverse_map_iterator operator--() { return (reverse_map_iterator(++(this->current))); }
+        reverse_map_iterator operator--(int) { return (reverse_map_iterator(++(this->current))); }
+        bool operator==(const reverse_map_iterator &it) { return ((this->current) == it.base()); }
+        bool operator!=(const reverse_map_iterator &it) { return ((this->current) != it.base()); }
+        bool operator<(const reverse_map_iterator &it) { return ((this->current) < it.base()); }
+        bool operator<=(const reverse_map_iterator &it) { return ((this->current) <= it.base()); }
+        bool operator>=(const reverse_map_iterator &it) { return ((this->current) >= it.base()); }
+        bool operator>(const reverse_map_iterator &it) { return ((this->current) > it.base()); }
+
     };
     template <class IT>
     class const_reverse_map_iterator
