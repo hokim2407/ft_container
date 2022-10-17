@@ -52,7 +52,7 @@ namespace ft
 
 
         // construct/copy/destroy:
-        vector(const allocator_type& __alloc = allocator_type()): _alloc(__alloc), _size(0), _capa(0) {
+        vector(const allocator_type& __alloc = allocator_type()):  _size(0), _capa(0),_alloc(__alloc) {
             this->_begin = this->_alloc.allocate(0);
         }
 
@@ -98,7 +98,7 @@ namespace ft
 
         vector &operator=(const vector &v)
         {
-            if (this == v)
+            if (*this == v)
                 return (*this);
 
             // remove all
@@ -107,7 +107,7 @@ namespace ft
             this->_alloc=  v._alloc;
             // remove alloc if capa is smaller
             if (this->_capa < v._size) {
-                this->_alloc.deallocate(this->_data, this->_capa);
+                this->_alloc.deallocate(this->_begin, this->_capa);
                 this->_begin = this->_alloc.allocate(v._size);
                 this->_capa = v._size;
             }
@@ -199,7 +199,9 @@ namespace ft
             return this->_begin[n];
         }
         const_reference at(size_type n) const{
-            return at(n);
+            if(capacity()< n)
+                return *(this->end());
+            return this->_begin[n];
         }
 
         reference front(){
@@ -377,10 +379,10 @@ namespace ft
 
     template <class T, class Allocator>
     bool operator==(const vector<T, Allocator> &x, const vector<T, Allocator> &y){
-        if (x._size != y._size) 
+        if (x.size() != y.size()) 
             return (false);
         
-        for (typename vector<T, Allocator>::size_type i = 0; i < x._size; i++) {
+        for (typename vector<T, Allocator>::size_type i = 0; i < x.size(); i++) {
             if (x[i] != y[i]) 
                 return (false);
         }

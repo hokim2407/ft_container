@@ -109,7 +109,7 @@ namespace ft
             return *this;
         }
         const T *base() const { return ptr; }
-        value_type &operator*() { return *ptr; }
+        const value_type &operator*() { return *ptr; }
         value_type *operator->() { return ptr; }
 
         bool operator==(const const_iterator &it) { return (this->ptr == it.base()); }

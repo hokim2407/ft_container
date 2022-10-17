@@ -10,12 +10,12 @@
 #ifndef _LIBCPP_STACK
 #define _LIBCPP_STACK
 
-#include "deque.hpp"
+#include "vector.hpp"
 
 namespace ft
 {
 
-    template <class T, class Container = deque<T>>
+    template <class T, class Container = vector<T>>
     class stack
     {
     public:
@@ -29,39 +29,50 @@ namespace ft
         container_type c;
 
     public:
-        stack() = default;
-        ~stack() = default;
+        stack(){
+            c = container_type();
+        };
+        ~stack(){};
 
-        stack(const stack& q) = default;
-        stack(stack&& q) = default;
+        stack(const stack& q){
+            *this = q;
+        }
 
-        stack& operator=(const stack& q) = default;
-        stack& operator=(stack&& q) = default;
+        explicit stack(container_type&& c){
+            this->c = c;
+        }
 
-        explicit stack(const container_type& c);
-        explicit stack(container_type&& c);
-        template <class Alloc> explicit stack(const Alloc& a);
-        template <class Alloc> stack(const container_type& c, const Alloc& a);
-        template <class Alloc> stack(container_type&& c, const Alloc& a);
-        template <class Alloc> stack(const stack& c, const Alloc& a);
-        template <class Alloc> stack(stack&& c, const Alloc& a);
+        stack& operator=(const stack& q) {
+            this->c = q.c;
+            return *this;
+        };
 
-        bool empty() const;
-        size_type size() const;
-        reference top();
-        const_reference top() const;
+        bool empty() const{
+            return this->c.empty();
+        }
+        size_type size() const{
+            return this->c.size();
+        }
+        reference top(){
+            return this->c.back();
+        }
+        const_reference top() const{
+            return this->c.back();
+        }
 
-        void push(const value_type& x);
-        void push(value_type&& x);
-        void pop();
+        void push(const value_type& x){
+            return this->c.push_back(x);
+        }
+        void push(value_type&& x){
+            return this->c.push_back(x);
+        }
+        void pop()
+        {
+            c.pop_back();
+        };
 
     };
 
-    template<class Container>
-    stack(Container) -> stack<typename Container::value_type, Container>;  // C++17
-
-    template<class Container, class Allocator>
-    stack(Container, Allocator) -> stack<typename Container::value_type, Container>; // C++17
 
     template <class T, class Container>
     bool operator==(const stack<T, Container>& x, const stack<T, Container>& y);
@@ -76,9 +87,6 @@ namespace ft
     template <class T, class Container>
     bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y);
 
-    template <class T, class Container>
-    void swap(stack<T, Container>& x, stack<T, Container>& y)
-    noexcept(noexcept(x.swap(y)));
 
 } 
 
