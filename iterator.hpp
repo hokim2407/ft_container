@@ -7,6 +7,8 @@ namespace ft
     template <class T>
     class iterator
     {
+    public:
+    typedef T value_type;
     private:
         T *ptr;
 
@@ -27,8 +29,8 @@ namespace ft
             return *this;
         }
         T *base() const { return ptr; }
-        T &operator*() { return *ptr; }
-        T *operator->() { return ptr; }
+        value_type &operator*() { return *ptr; }
+        value_type *operator->() { return ptr; }
         bool operator==(const iterator &it) { return (this->ptr == it.base()); }
         bool operator!=(const iterator &it) { return (this->ptr != it.base()); }
         bool operator<(const iterator &it) { return (this->ptr < it.base()); }
@@ -87,6 +89,7 @@ namespace ft
     {
     public:
         typedef ft::iterator<T> iterator;
+        typedef T value_type;
 
     private:
         const T *ptr;
@@ -106,8 +109,8 @@ namespace ft
             return *this;
         }
         const T *base() const { return ptr; }
-        const T operator*() { return *ptr; }
-        const T *operator->() { return ptr; }
+        value_type &operator*() { return *ptr; }
+        value_type *operator->() { return ptr; }
 
         bool operator==(const const_iterator &it) { return (this->ptr == it.base()); }
         bool operator!=(const const_iterator &it) { return (this->ptr != it.base()); }
@@ -160,11 +163,13 @@ namespace ft
         }
         T &operator[](int n) { return ptr[n]; }
     };
+
     template <class T>
     class reverse_iterator
     {
     public:
         typedef ft::iterator<T> iterator;
+        typedef typename iterator::value_type value_type;
 
     private:
         iterator current;
@@ -173,40 +178,40 @@ namespace ft
         reverse_iterator(){};
         reverse_iterator(const T *v)
         {
-            current = iterator(v);
+            this->current = iterator(v);
         }
         reverse_iterator(iterator &it)
         {
-            current = it.base();
+            this->current = it.base();
         }
         explicit reverse_iterator(iterator it)
         {
-            current = it;
+            this->current = it;
         }
         iterator base() const
         {
-            return (current);
+            return (this->current);
         }
-        T &operator*()
+        value_type &operator*()
         {
             return (this->current).operator*();
         }
-        T *operator->()
+        value_type *operator->()
         {
             return (this->current).operator->();
         }
         reverse_iterator operator+(int n) { return (reverse_iterator(base() - n)); }
         reverse_iterator operator-(int n) { return (reverse_iterator(base() + n)); }
-        reverse_iterator operator++() { return (reverse_iterator(--current)); }
-        reverse_iterator operator++(int) { return (reverse_iterator(--current)); }
-        reverse_iterator operator--() { return (reverse_iterator(++current)); }
-        reverse_iterator operator--(int) { return (reverse_iterator(++current)); }
-        bool operator==(const reverse_iterator &it) { return (this->ptr == it.base()); }
-        bool operator!=(const reverse_iterator &it) { return (this->ptr != it.base()); }
-        bool operator<(const reverse_iterator &it) { return (this->ptr < it.base()); }
-        bool operator<=(const reverse_iterator &it) { return (this->ptr <= it.base()); }
-        bool operator>=(const reverse_iterator &it) { return (this->ptr >= it.base()); }
-        bool operator>(const reverse_iterator &it) { return (this->ptr > it.base()); }
+        reverse_iterator operator++() { return (reverse_iterator(--(this->current))); }
+        reverse_iterator operator++(int) { return (reverse_iterator(--(this->current))); }
+        reverse_iterator operator--() { return (reverse_iterator(++(this->current))); }
+        reverse_iterator operator--(int) { return (reverse_iterator(++(this->current))); }
+        bool operator==(const reverse_iterator &it) { return (this->current == it.base()); }
+        bool operator!=(const reverse_iterator &it) { return (this->current != it.base()); }
+        bool operator<(const reverse_iterator &it) { return (this->current < it.base()); }
+        bool operator<=(const reverse_iterator &it) { return (this->current <= it.base()); }
+        bool operator>=(const reverse_iterator &it) { return (this->current >= it.base()); }
+        bool operator>(const reverse_iterator &it) { return (this->current > it.base()); }
         reverse_iterator &operator+=(int n)
         {
             current -= n;
@@ -224,6 +229,8 @@ namespace ft
     public:
         typedef ft::const_iterator<T> const_iterator;
         typedef ft::reverse_iterator<T> reverse_iterator;
+        typedef typename const_iterator::value_type value_type;
+
 
     private:
         const_iterator current;
@@ -236,37 +243,43 @@ namespace ft
         }
         const_reverse_iterator(const T *v)
         {
-            current = const_iterator(v);
+            this->current = const_iterator(v);
         }
         const_reverse_iterator &operator=(const const_reverse_iterator &it)
         {
-            current = it.base();
+            this->current = it.base();
             return *this;
         }
         explicit const_reverse_iterator(const_iterator it)
         {
-            current = it;
+            this->current = it;
         }
         const_iterator base() const
         {
-            return (current);
+            return (this->current);
         }
-        const T operator*()
+        value_type &operator*()
         {
-            return (*(current - 1));
+            return (this->current).operator*();
         }
-        const T *operator->()
+        value_type *operator->()
         {
-            return (current - 1);
+            return (this->current).operator->();
         }
+
         const_reverse_iterator operator+(int n) { return (const_reverse_iterator(base() - n)); }
         const_reverse_iterator operator-(int n) { return (const_reverse_iterator(base() + n)); }
-        bool operator==(const const_reverse_iterator &it) { return (this->ptr == it.base()); }
-        bool operator!=(const const_reverse_iterator &it) { return (this->ptr != it.base()); }
-        bool operator<(const const_reverse_iterator &it) { return (this->ptr < it.base()); }
-        bool operator<=(const const_reverse_iterator &it) { return (this->ptr <= it.base()); }
-        bool operator>=(const const_reverse_iterator &it) { return (this->ptr >= it.base()); }
-        bool operator>(const const_reverse_iterator &it) { return (this->ptr > it.base()); }
+        const_reverse_iterator operator++() { return (const_reverse_iterator(--(this->current))); }
+        const_reverse_iterator operator++(int) { return (const_reverse_iterator(--(this->current))); }
+        const_reverse_iterator operator--() { return (const_reverse_iterator(++(this->current))); }
+        const_reverse_iterator operator--(int) { return (const_reverse_iterator(++(this->current))); }
+        bool operator==(const const_reverse_iterator &it) { return (this->current == it.base()); }
+        bool operator!=(const const_reverse_iterator &it) { return (this->current != it.base()); }
+        bool operator<(const const_reverse_iterator &it) { return (this->current < it.base()); }
+        bool operator<=(const const_reverse_iterator &it) { return (this->current <= it.base()); }
+        bool operator>=(const const_reverse_iterator &it) { return (this->current >= it.base()); }
+        bool operator>(const const_reverse_iterator &it) { return (this->current > it.base()); }
+        
         const_reverse_iterator &operator+=(int n)
         {
             current -= n;

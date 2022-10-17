@@ -40,7 +40,6 @@ void printAll(std::map<std::string, int> &std_m, ft::map<std::string, int> &ft_m
         iter++;
     }
     std::cout << "-" << std::endl;
-    std::cout << "-" << std::endl;
 }
 
 void test()
