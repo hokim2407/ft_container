@@ -8,8 +8,8 @@ NAME = data
 RM = rm -f
 
 SRCS = main.cpp
-SRCS = main_vector.cpp
 SRCS = main_map.cpp
+SRCS = main_vector.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

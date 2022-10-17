@@ -164,21 +164,25 @@ namespace ft
         T &operator[](int n) { return ptr[n]; }
     };
 
-    template <class T>
+    template <class IT>
     class reverse_iterator
     {
     public:
-        typedef ft::iterator<T> iterator;
-        typedef typename iterator::value_type value_type;
+        typedef IT iterator;
+        typedef typename IT::value_type value_type;
 
     private:
         iterator current;
 
     public:
         reverse_iterator(){};
-        reverse_iterator(const T *v)
+        reverse_iterator(reverse_iterator const & it)
         {
-            this->current = iterator(v);
+            *this = it;
+        }
+        reverse_iterator(const IT *iter)
+        {
+            this->current = iterator(iter);
         }
         reverse_iterator(iterator &it)
         {
@@ -187,6 +191,11 @@ namespace ft
         explicit reverse_iterator(iterator it)
         {
             this->current = it;
+        }
+        reverse_iterator &operator=(const reverse_iterator &it)
+        {
+            this->current = it.base();
+            return *this;
         }
         iterator base() const
         {
@@ -223,38 +232,33 @@ namespace ft
             return (*this);
         }
     };
-    template <class T>
+    template <class IT>
     class const_reverse_iterator
     {
     public:
-        typedef ft::const_iterator<T> const_iterator;
-        typedef ft::reverse_iterator<T> reverse_iterator;
-        typedef typename const_iterator::value_type value_type;
+        typedef IT iterator;
+        typedef typename IT::value_type value_type;
 
 
     private:
-        const_iterator current;
+        iterator current;
 
     public:
         const_reverse_iterator(){};
-        const_reverse_iterator(const reverse_iterator &it) : current(it.base())
+        const_reverse_iterator(const IT *iter)
         {
-            it;
-        }
-        const_reverse_iterator(const T *v)
-        {
-            this->current = const_iterator(v);
+            this->current = *iter;
         }
         const_reverse_iterator &operator=(const const_reverse_iterator &it)
         {
             this->current = it.base();
             return *this;
         }
-        explicit const_reverse_iterator(const_iterator it)
+        explicit const_reverse_iterator(iterator it)
         {
             this->current = it;
         }
-        const_iterator base() const
+        iterator base() const
         {
             return (this->current);
         }

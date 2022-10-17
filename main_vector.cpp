@@ -14,6 +14,16 @@ void printAll(std::vector<int>& v ,ft::vector<int> &vec , std::string header = "
     std::cout<<"std === size: " << v.size() << ", capa:" << v.capacity() << ", max_size:"<< v.max_size()<< std::endl ;
     
     std::cout<<"ft === size: " << vec.size() << ", capa:" << vec.capacity() << ", max_size:"<< vec.max_size() << std::endl ;
+
+    ft::vector<int>::iterator iter1= vec.begin();
+    std::vector<int>::iterator it1= v.begin();
+    for(; iter1 !=  vec.end(); iter1++){
+            std::cout << "std: "<< *it1;
+            std::cout << ", ft: "<< *iter1 << std::endl ;
+        it1++;
+    }
+
+    std::cout<<"-"<< std::endl ;
     ft::vector<int>::reverse_iterator iter= vec.rbegin();
     std::vector<int>::reverse_iterator it= v.rbegin();
     for(; iter !=  vec.rend(); iter++){

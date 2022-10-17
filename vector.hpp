@@ -37,8 +37,8 @@ namespace ft
         typedef ft::iterator<T> iterator;
         typedef ft::const_iterator<T> const_iterator;
 
-        typedef ft::reverse_iterator<T> reverse_iterator;
-        typedef ft::const_reverse_iterator<T> const_reverse_iterator;
+        typedef ft::reverse_iterator<iterator> reverse_iterator;
+        typedef ft::const_reverse_iterator<const_iterator> const_reverse_iterator;
 
         private:
 
@@ -134,12 +134,10 @@ namespace ft
          }
 
         reverse_iterator rbegin() {
-
-            return  reverse_iterator(this->end()-1);
+              return reverse_iterator(iterator(this->end()-1));
         }
         const_reverse_iterator rbegin() const {
-            
-            return  const_reverse_iterator(this->end()-1);
+            return  const_reverse_iterator(iterator(this->end()-1));
         }
         reverse_iterator rend() {
             

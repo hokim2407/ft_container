@@ -48,8 +48,8 @@ namespace ft
 
         typedef typename ft::map_iterator<Tree> iterator;
         typedef typename ft::const_map_iterator<Tree> const_iterator;
-        typedef typename ft::reverse_map_iterator<iterator> reverse_iterator;
-        typedef typename ft::const_map_iterator<const_iterator> const_reverse_iterator;
+        typedef typename ft::reverse_iterator<iterator> reverse_iterator;
+        typedef typename ft::const_iterator<const_iterator> const_reverse_iterator;
 
         class value_compare
             : public std::binary_function<value_type, value_type, bool>
