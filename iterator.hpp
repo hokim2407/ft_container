@@ -176,19 +176,12 @@ namespace ft
 
     public:
         reverse_iterator(){};
-        reverse_iterator(reverse_iterator const & it)
+         reverse_iterator(reverse_iterator const & it)
         {
             *this = it;
         }
-        reverse_iterator(const IT *iter)
-        {
-            this->current = iterator(iter);
-        }
-        reverse_iterator(iterator &it)
-        {
-            this->current = it.base();
-        }
-        explicit reverse_iterator(iterator it)
+
+         explicit  reverse_iterator(iterator it)
         {
             this->current = it;
         }

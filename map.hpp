@@ -19,6 +19,7 @@
 #include "utils.hpp"
 #include "avl.hpp"
 #include "pair.hpp"
+#include "iterator.hpp"
 #include "map_iterator.hpp"
 #include "utils.hpp"
 
