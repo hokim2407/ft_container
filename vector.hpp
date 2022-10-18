@@ -51,15 +51,21 @@ namespace ft
         public:
 
 
+        // vector():  _size(0), _capa(0) {
+        //     this->_alloc = allocator_type();
+        //     this->_begin = this->_alloc.allocate(0);
+        // }
+
+
         // construct/copy/destroy:
         vector(const allocator_type& __alloc = allocator_type()):  _size(0), _capa(0),_alloc(__alloc) {
-            this->_begin = this->_alloc.allocate(0);
+            this->_begin = 0;
         }
 
         vector(size_type n, const value_type &value = value_type(), const allocator_type &alloc = allocator_type()
        , typename ft::enable_if<ft::is_integral<size_type>::value, size_type>::type * = 0
         )
-            : _alloc(alloc), _size(0), _capa(n)
+            : _size(0), _capa(n), _alloc(alloc)
         {
             this->_begin = this->_alloc.allocate(n);
             for (; size() < capacity(); this->_size++)
@@ -167,12 +173,22 @@ namespace ft
             if(n < capacity())
                 return;
 
+            size_type new_size = 0;
+            const size_type ms = max_size();
+            // new_size > ms인 경우, length error를 return
+            const size_type capa = capacity();
+            if (capa >= ms / 2) {
+                new_size = ms;
+            }
+            else
+                new_size = (2 * capa > n) ? (2 * capa) : n;
+
             pointer ori_begin = this->_begin;
             size_type ori_size = size();
             size_type ori_capacity = capacity();
 
-            this->_begin = this->_alloc.allocate(n);
-            this->_capa = n;
+            this->_begin = this->_alloc.allocate(new_size);
+            this->_capa = new_size;
             this->_size = 0;
 
             for (; size() < ori_size; this->_size++)
@@ -217,26 +233,39 @@ namespace ft
             return this->_begin[size()-1];
         }
 
+        value_type*       data() {
+            return this->_begin;
+        }
+        const value_type* data() const {
+            return this->_begin;
+
+        }
+
         // // modifiers:
         template <class InputIterator>
         void assign(InputIterator first, InputIterator last,
          typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
         {
+        std::cout <<"_size"<< _size << std::endl;
+            size_type diff = last - first;
             this->clear();
-            if (this->_capa < last - first)
-                this->reserve(last - first);
+            if (this->_capa < diff)
+                this->reserve(diff);
             for (; first != last; ++first)
             {
                 this->push_back(*first);
             }
+            this->_size = diff;
+
         }
         void assign(size_type n, const value_type &u
           , typename ft::enable_if<ft::is_integral<size_type>::value, size_type>::type * = 0){
             if (this->_capa < n)
                 this->reserve(n);
 
-            for (int i = 0; i < n; i++)
-                this->_alloc.construct(&this->_begin[this->_size], u);
+            for (size_type i = 0; i < n; i++)
+                this->_alloc.construct(&this->_begin[i], u);
+            this->_size = n;
                 
         }
         void push_back(const value_type &x){
@@ -267,7 +296,7 @@ namespace ft
             size_type start = position.base() - this->_begin;
 
             if (size() + n >= capacity())
-                reserve(capacity() + n);
+                reserve( capacity() > 100 ? capacity() + n * 2 :capacity() * 2);
 
             // move data to back
             for (size_type i = size() - 1; i >= start; i--)

@@ -70,7 +70,7 @@ namespace ft
         }
         int operator-(iterator &it)
         {
-            return (*this->ptr - it.base());
+            return (this->ptr - it.base());
         }
         iterator operator-(int n)
         {
