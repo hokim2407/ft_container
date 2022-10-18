@@ -5,7 +5,7 @@
 // #include <deque>
 // #include <iterator>
 // #include <map>
-// #include <stack>
+#include <vector>
 // #include <algorithm>
 
 void printAll(std::map<std::string, int> &std_m, ft::map<std::string, int> &ft_m, std::string header = "")
@@ -82,9 +82,71 @@ void test()
     std::cout << "std: " << std_m.find("g")->first << ", ft: " << ft_m.find("g")->first;
     return;
 }
+#include <string> 
+template <class T>
+std::vector<T> copy_constructor_test1() {
+    std::map<T, T> mp;
+    std::vector<T> v;
+
+    for (int i = 0, j = 10; i < 30 ; ++i, ++j) {
+        mp.insert(std::make_pair(std::to_string(i), std::to_string(j)));
+    }
+    typename std::map<T, T> mp2(mp.begin(), mp.end());
+    typename std::map<T, T>::iterator it = mp2.begin();
+    for (int i = 0; i < 30 ; ++i, it++) {
+        std::cout<< (it->first)<<":"<< (it->second) << std::endl;
+        // v.push_back(it->first);
+        // v.push_back(it->second);
+    }
+    return v;
+}
+
+template <class T>
+std::vector<T> copy_constructor_test2() {
+    typedef typename ft::map<T, T>::iterator iterator;
+    ft::map<T,T> mp;
+    std::vector<T> v;
+   iterator it;
+    for (int i = 0, j = 10; i < 30 ; ++i, ++j) {
+        std::cout<<"in:"<<i<< std::endl;
+        ft::pair<T,T> temp =  ft::make_pair(std::to_string(i), std::to_string(j));
+        std::cout<< (temp.first)<<":"<< (temp.second) << std::endl;
+        ft::pair<iterator ,bool>  result  = mp.insert(temp);
+        std::cout<<"last:"<< (result.first->first)<<":"<< (result.second) << std::endl;
+   
+    }
+    typename ft::map<T, T> mp2(mp.begin(), mp.end());
+    it = mp2.begin();
+    for (int i = 0; i < 30 ; ++i, it++) {
+        std::cout<< (it->first)<<":"<< (it->second) << std::endl;
+    }
+    return v;
+}
+
+std::vector<int> copy_constructor_test() {
+    ft::map<int, int> mp;
+    std::vector<int> v;
+
+    for (int i = 0, j = 10; i < 30 ; ++i, ++j) {
+        mp.insert(ft::make_pair(i, j));
+    }
+    ft::map<int, int> mp2(mp.begin(), mp.end());
+    ft::map<int, int>::iterator it = mp2.begin();
+    for (int i = 0; i < 30 ; ++i, it++) {
+        v.push_back(it->first);
+        v.push_back(it->second);
+    }
+    return v;
+}
+
 int main()
 {
-    test();
-    while(1);
+    //std::vector<std::string > res1 =  copy_constructor_test1<std::string>();
+    //     std::cout<< "====" << std::endl;
+    //  std::vector<std::string > res2 = copy_constructor_test2<std::string>();
+
+ copy_constructor_test();
+    std::cout << 123 << std::endl;
+    //std::cout << (res1 ==res2) << std::endl;
     return 0;
 }

@@ -11,9 +11,9 @@ void printAll(std::vector<int>& v ,ft::vector<int> &vec , std::string header = "
     
     std::cout<<"=====" << header <<"=====" <<std::endl ;
     
-    std::cout<<"std === size: " << v.size() << ", capa:" << v.capacity() << ", max_size:"<< v.max_size()<< std::endl ;
+    std::cout<<"std === size: " << v.size() << ", capa:" << v.size() << ", max_size:"<< v.max_size()<< std::endl ;
     
-    std::cout<<"ft === size: " << vec.size() << ", capa:" << vec.capacity() << ", max_size:"<< vec.max_size() << std::endl ;
+    std::cout<<"ft === size: " << vec.size() << ", capa:" << vec.size() << ", max_size:"<< vec.max_size() << std::endl ;
 
     ft::vector<int>::iterator iter1= vec.begin();
     std::vector<int>::iterator it1= v.begin();
@@ -79,7 +79,7 @@ void test (){
 
     vec.reserve(12);
     v.reserve(12);
-    std::cout<< ". "<<  vec.capacity()<<std::endl;
+    std::cout<< ". "<<  vec.size()<<std::endl;
     printAll(v, vec, "reserve");
 
     ft::vector<int> vec2(v.begin(), v.end());
@@ -95,9 +95,97 @@ void test (){
     printAll(v, vec, "swaped vec1");
     printAll(v2,vec2, "swaped vec2");
 
+    
+    std::cout<<"ft == ft2: " << (v == v2)<< std::endl ;
+    std::cout<<"ft != ft2: " << (v != v2)<< std::endl ;
+    std::cout<<"ft < ft2: " << (v < v2)<< std::endl ;
+    std::cout<<"ft > s: " << (v > v2)<< std::endl ;
+    std::cout<<"ft <= std: " << (v <= v2)<< std::endl ;
+    std::cout<<"ft >= std: " << (v >= v2)<< std::endl ;
+
     return;
 }
+#include <sstream>
+
+void printStdV (std::vector<int> v){
+   typedef typename  std::vector<int>::iterator iterator;
+    iterator start = v.begin();
+    std::cout<< "===std===" << std::endl;
+    for(;start != v.end();start ++)
+    std::cout<< *start << std::endl;
+
+}
+void printFtV (ft::vector<int> v){
+   typedef typename  ft::vector<int>::iterator iterator;
+    iterator start = v.begin();
+    std::cout<< "===ft===" << std::endl;
+    for(;start != v.end();start ++)
+    std::cout<< *start << std::endl;
+
+}
+
+
+
+std::vector<int> assign_test1() {
+ //  typedef typename  std::vector<int>::iterator iterator;
+    std::vector<int> vector;
+    std::vector<int> v;
+    for (int i = 0; i < 10; ++i)
+        vector.push_back(i);
+    v.push_back(*(vector.erase(vector.begin() + 8)));
+    v.push_back(*(vector.begin() + 4));
+    v.push_back(vector.size());
+    v.push_back(vector.size());
+    std::cout<<"*"<< vector.size() << std::endl;
+    printStdV(vector);
+    return v;
+}
+
+std::vector<int> assign_test2() {
+ // typedef typename  ft::vector<int>::iterator iterator;
+    ft::vector<int> vector;
+    std::vector<int> v;
+    for (int i = 0; i < 10; ++i)
+        vector.push_back(i);
+    v.push_back(*(vector.erase(vector.begin() + 8)));
+ 
+    v.push_back(*(vector.begin() + 4));
+    v.push_back(vector.size());
+    v.push_back(vector.size());
+    std::cout<<"*"<< vector.size() << std::endl;
+    printFtV(vector);
+    return v;
+}
+void assign_test3() {
+    std::vector<int> vector;
+    vector.assign(1000, 1);
+    vector.insert(vector.end() - 50, 4200 , 2);    
+    std::vector<int>::iterator iter = vector.begin();
+
+    ft::vector<int> v;
+    v.assign(1000, 1);
+    v.insert(v.end() - 50, 4200 , 2);    
+    ft::vector<int>::iterator iter2 = v.begin();
+
+
+    int count = 1;
+    for(; iter!= vector.end(); iter++){
+        if(*iter != *iter2)
+            std::cout <<count<< " std: " << *iter<< " " << *iter2 << std::endl;
+        iter2 ++;
+        count ++;
+    }
+            std::cout <<count<< " std: " << vector.size()<< " " << v.size() << std::endl;
+}
+
 int main (){
-    test();
+    //test();
+     std::vector<int > res1 =  assign_test1();
+     std::vector<int > res2 = assign_test2();
+
+
+    std::cout << "===" << std::endl;
+    std::cout << (res1 ==res2) << std::endl;
+
     return 0;
 }

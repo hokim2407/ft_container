@@ -15,7 +15,7 @@
 namespace ft
 {
 
-    template <class T, class Container = vector<T>>
+    template <class T, class Container = ft::vector<T> >
     class stack
     {
     public:
@@ -37,8 +37,13 @@ namespace ft
         stack(const stack& q){
             *this = q;
         }
-
-        explicit stack(container_type&& c){
+        stack(stack& q){
+            *this = q;
+        }
+        explicit stack(container_type& c){
+            this->c = c;
+        }
+        explicit stack(const container_type& c){
             this->c = c;
         }
 
@@ -71,21 +76,27 @@ namespace ft
             c.pop_back();
         };
 
+    friend  bool operator==(const stack<T, Container>& x, const stack<T, Container>& y){
+        return x.c == y.c;
+    }
+    friend bool operator< (const stack<T, Container>& x, const stack<T, Container>& y){
+        return x.c < y.c;
+    }
+    friend bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y){
+        return x.c != y.c;
+    }
+    friend bool operator> (const stack<T, Container>& x, const stack<T, Container>& y){
+        return x.c > y.c;
+    }
+    friend bool operator>=(const stack<T, Container>& x, const stack<T, Container>& y){
+        return x.c >= y.c;
+    }
+    friend bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y){
+        return x.c <= y.c;
+    }
     };
 
 
-    template <class T, class Container>
-    bool operator==(const stack<T, Container>& x, const stack<T, Container>& y);
-    template <class T, class Container>
-    bool operator< (const stack<T, Container>& x, const stack<T, Container>& y);
-    template <class T, class Container>
-    bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y);
-    template <class T, class Container>
-    bool operator> (const stack<T, Container>& x, const stack<T, Container>& y);
-    template <class T, class Container>
-    bool operator>=(const stack<T, Container>& x, const stack<T, Container>& y);
-    template <class T, class Container>
-    bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y);
 
 
 } 
