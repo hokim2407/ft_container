@@ -27,8 +27,7 @@ namespace ft
 {
 
     template <class Key, class T, class Compare = std::less<Key>,
-              class Allocator = std::allocator<ft::pair<const Key, T> > 
-              >
+              class Allocator = std::allocator<ft::pair<const Key, T>>>
     class map
     {
     public:
@@ -76,9 +75,8 @@ namespace ft
 
         template <class InputIterator>
         map(InputIterator first, InputIterator last,
-            const key_compare &comp, const allocator_type &a
-             , typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0
-          
+            const key_compare &comp = key_compare(), const allocator_type &a = allocator_type(), typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0
+
             ) : _tree(comp, a), _alloc(a), _key_comp(comp)
         {
             this->_value_comp = value_compare();
@@ -89,9 +87,7 @@ namespace ft
             *this = m;
         }
 
-        ~map(){
-            this->clear();
-        };
+        ~map(){};
 
         map &operator=(const map &m)
         {
@@ -106,50 +102,50 @@ namespace ft
         }
 
         // iterators:
-        iterator begin() 
+        iterator begin()
         {
             return iterator(&(this->_tree));
         }
-        const_iterator begin() const 
+        const_iterator begin() const
         {
             return const_iterator(&(this->_tree));
         }
-        iterator end() 
+        iterator end()
         {
-            return iterator(&(this->_tree),this->_tree.end());
+            return iterator(&(this->_tree), this->_tree.end());
         }
-        const_iterator end() const 
+        const_iterator end() const
         {
-            return const_iterator(&(this->_tree),this->_tree.end());
+            return const_iterator(&(this->_tree), this->_tree.end());
         }
 
-        reverse_iterator rbegin() 
+        reverse_iterator rbegin()
         {
-            return reverse_iterator(iterator(&(this->_tree),this->_tree.last()));
+            return reverse_iterator(iterator(&(this->_tree), this->_tree.last()));
         }
-        const_reverse_iterator rbegin() const 
+        const_reverse_iterator rbegin() const
         {
-            return const_reverse_iterator(const_iterator(&(this->_tree),this->_tree.last()));
+            return const_reverse_iterator(const_iterator(&(this->_tree), this->_tree.last()));
         }
-        reverse_iterator rend() 
+        reverse_iterator rend()
         {
-            return reverse_iterator(iterator(&(this->_tree),this->_tree.end()));
+            return reverse_iterator(iterator(&(this->_tree), this->_tree.end()));
         }
-        const_reverse_iterator rend() const 
+        const_reverse_iterator rend() const
         {
-            return const_reverse_iterator(const_iterator(&(this->_tree),this->_tree.end()));
+            return const_reverse_iterator(const_iterator(&(this->_tree), this->_tree.end()));
         }
 
         // capacity:
-        bool empty() const 
+        bool empty() const
         {
             return this->_tree.size() == 0;
         }
-        size_type size() const 
+        size_type size() const
         {
             return this->_tree.size();
         }
-        size_type max_size() const 
+        size_type max_size() const
         {
             return this->_tree.max_size();
         }
@@ -161,25 +157,32 @@ namespace ft
         }
         // modifiers:
         // pair<iterator, bool>
-        value_type insert(const value_type &v)
+        pair<iterator, bool> insert(const value_type &v)
         {
-            this->_tree.insert(v);
-            return _tree.search(this->_tree.base(), v.first)->data;
+            std::cout<<(v.first)<<":"<< (v.second) << std::endl;
+            bool is_new = false;
+            if (_tree.search(this->_tree.base(), v.first) == NULL)
+            { 
+                this->_tree.insert(v);
+                is_new = true;
+            }
+            iterator iter = iterator(&(this->_tree),_tree.search(this->_tree.base(), v.first));
+            
+            return ft::make_pair<iterator,bool>(iter,is_new);
         }
-        iterator insert(const_iterator position, const value_type &v
-             , typename ft::enable_if<!ft::is_iterator<Tree, value_type>::value, size_type>::type * = 0)
+        iterator insert(const_iterator position, const value_type &v, typename ft::enable_if<!ft::is_iterator<Tree, value_type>::value, size_type>::type * = 0)
         {
             this->_tree.insert(v);
             if (position != NULL)
                 return;
         }
         template <class InputIterator>
-        void insert(InputIterator first, InputIterator last
-             , typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0)
+        void insert(InputIterator first, InputIterator last, typename ft::enable_if<ft::is_iterator<Tree, InputIterator>::value, size_type>::type * = 0)
         {
 
             for (InputIterator iter = first; iter != last; iter++)
             {
+
                 this->_tree.insert(*iter);
             }
         }
@@ -202,7 +205,7 @@ namespace ft
                 this->_tree.remove((*iter).first);
             }
         }
-        void clear() 
+        void clear()
         {
             this->_tree.clear();
         }
@@ -213,7 +216,7 @@ namespace ft
         }
 
         // observers:
-        allocator_type get_allocator() const 
+        allocator_type get_allocator() const
         {
             return this->_alloc;
         }
@@ -227,12 +230,14 @@ namespace ft
         }
 
         // map operations:
-        iterator find(const key_type &k){
-            
-            return iterator(&(this->_tree), this->_tree.search(this->_tree.base(),k));
+        iterator find(const key_type &k)
+        {
+
+            return iterator(&(this->_tree), this->_tree.search(this->_tree.base(), k));
         }
-        const_iterator find(const key_type &k) const{
-            return  find(k);
+        const_iterator find(const key_type &k) const
+        {
+            return find(k);
         };
         iterator lower_bound(const key_type &k);
         const_iterator lower_bound(const key_type &k) const;
@@ -274,9 +279,10 @@ namespace ft
     // specialized algorithms:
     template <class Key, class T, class Compare, class Allocator>
     void
-    swap(map<Key, T, Compare, Allocator> &x, map<Key, T, Compare, Allocator> &y) {
+    swap(map<Key, T, Compare, Allocator> &x, map<Key, T, Compare, Allocator> &y)
+    {
         x.swap(y);
-        };
+    };
 
 } // namespace ft
 

@@ -41,7 +41,7 @@ namespace ft
         }
         T *tree() const { return this->_tree; }
         Node *base() const { return this->_ptr; }
-        Node &operator*() { return (this->_ptr->data); }
+        value_type &operator*() { return (this->_ptr->data); }
         value_type *operator->() { return &(this->_ptr->data); }
         bool operator==(const map_iterator &it) { return (this->_ptr == it.base()); }
         bool operator!=(const map_iterator &it) { return (this->_ptr != it.base()); }
@@ -119,7 +119,7 @@ namespace ft
         }
         T *tree() const { return this->_tree; }
         const Node *base() const { return _ptr; }
-        Node &operator*() { return (this->_ptr->data); }
+        value_type &operator*() { return (this->_ptr->data); }
         value_type *operator->() { return &(this->_ptr->data); }
 
         bool operator==(const const_map_iterator &it) { return (this->_ptr == it.base()); }
