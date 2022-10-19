@@ -1,15 +1,24 @@
-#include "avl.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/27 17:53:07 by rchallie          #+#    #+#             */
+/*   Updated: 2020/12/10 21:36:17 by rchallie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int main (){
-    ft::Tree<int, std::string> *mytree = new ft::Tree<int, std::string>();
-    for (int i = 0; i <20; i++){
-    mytree->insert(ft::pair<int,std::string>(i,"abc"));
-    }
-    std::cout<< (mytree->search(mytree->base(),3))->data.first<<std::endl;
-    mytree->remove(9);
-    mytree->remove(8);
-    mytree->remove(10);
-    mytree->remove(0);
+#include "tester/tester.hpp"
 
-    return 0;
+#include <stack>
+
+int main()
+{
+    test_vector();
+    std::cout << "\n";
+    test_map();
+    std::cout << "\n";
+    test_stack();
 }

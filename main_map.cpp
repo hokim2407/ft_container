@@ -1,5 +1,5 @@
-#include "map.hpp"
-#include "pair.hpp"
+#include "containers/map.hpp"
+#include "utils/pair.hpp"
 #include <iostream>
 #include <map>
 // #include <deque>
@@ -141,12 +141,12 @@ std::vector<int> copy_constructor_test() {
 
 int main()
 {
-    //std::vector<std::string > res1 =  copy_constructor_test1<std::string>();
-    //     std::cout<< "====" << std::endl;
-    //  std::vector<std::string > res2 = copy_constructor_test2<std::string>();
+  std::vector<std::string > res1 =  copy_constructor_test1<std::string>();
+        std::cout<< "====" << std::endl;
+     std::vector<std::string > res2 = copy_constructor_test2<std::string>();
 
- copy_constructor_test();
+//  copy_constructor_test();
     std::cout << 123 << std::endl;
-    //std::cout << (res1 ==res2) << std::endl;
+ //   std::cout << (res1 ==res2) << std::endl;
     return 0;
 }

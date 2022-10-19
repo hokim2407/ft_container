@@ -1,4 +1,4 @@
-#include "vector.hpp"
+#include "containers/vector.hpp"
 #include <iostream>
 #include <vector>
 // #include <deque>
@@ -132,12 +132,16 @@ std::vector<int> assign_test1() {
     std::vector<int> v;
     for (int i = 0; i < 10; ++i)
         vector.push_back(i);
+    std::cout<<"*"<< *(vector.erase(vector.begin() + 8))<< std::endl;
     v.push_back(*(vector.erase(vector.begin() + 8)));
+    std::cout<<"*"<< *(vector.erase(vector.begin() + 4))<< std::endl;
+    v.push_back(*(vector.erase(vector.begin() + 4)));
+    printStdV(vector);
     v.push_back(*(vector.begin() + 4));
     v.push_back(vector.size());
     v.push_back(vector.size());
+    std::cout<<"*"<< *(vector.begin() + 4) << std::endl;
     std::cout<<"*"<< vector.size() << std::endl;
-    printStdV(vector);
     return v;
 }
 
@@ -147,13 +151,17 @@ std::vector<int> assign_test2() {
     std::vector<int> v;
     for (int i = 0; i < 10; ++i)
         vector.push_back(i);
+    std::cout<<"*"<< *(vector.erase(vector.begin() + 8))<< std::endl;
     v.push_back(*(vector.erase(vector.begin() + 8)));
+    std::cout<<"*"<< *(vector.erase(vector.begin() + 4))<< std::endl;
+    v.push_back(*(vector.erase(vector.begin() + 4)));
  
+    printFtV(vector);
     v.push_back(*(vector.begin() + 4));
     v.push_back(vector.size());
     v.push_back(vector.size());
+    std::cout<<"*"<< *(vector.begin() + 4) << std::endl;
     std::cout<<"*"<< vector.size() << std::endl;
-    printFtV(vector);
     return v;
 }
 void assign_test3() {

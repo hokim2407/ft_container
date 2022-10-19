@@ -7,10 +7,10 @@ NAME = data
 
 RM = rm -f
 
-SRCS = main.cpp
-SRCS = main_vector.cpp
-SRCS = main_map.cpp
 SRCS = main_stack.cpp
+SRCS = main_map.cpp
+SRCS = main_vector.cpp
+SRCS = main.cpp tester/tester.cpp  tester/tester_vector.cpp tester/tester_stack.cpp tester/tester_map.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
