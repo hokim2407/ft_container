@@ -35,11 +35,11 @@ namespace ft
         typedef typename allocator_type::pointer pointer;
         typedef typename allocator_type::const_pointer const_pointer;
 
-        typedef ft::iterator<T> iterator;
-        typedef ft::const_iterator<T> const_iterator;
+        typedef typename ft::iterator<T> iterator;
+        typedef typename ft::iterator<T> const_iterator;
 
-        typedef ft::reverse_iterator<iterator> reverse_iterator;
-        typedef ft::const_reverse_iterator<const_iterator> const_reverse_iterator;
+        typedef typename ft::reverse_iterator<iterator> reverse_iterator;
+        typedef typename ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
     private:
         pointer _begin;
@@ -128,37 +128,37 @@ namespace ft
         {
             return iterator(this->_begin);
         }
-        const_iterator begin() const
+        const iterator begin() const
         {
-            return const_iterator(this->_begin);
+            return iterator(this->_begin);
         }
         iterator end()
         {
             return iterator(this->_begin) + this->_size;
         }
-        const_iterator end() const
+        const iterator end() const
         {
 
-            return const_iterator(this->_begin) + this->_size;
+            return iterator(this->_begin) + this->_size;
         }
 
         reverse_iterator rbegin()
         {
             return reverse_iterator(iterator(this->end() - 1));
         }
-        const_reverse_iterator rbegin() const
+        const reverse_iterator rbegin() const
         {
-            return const_reverse_iterator(iterator(this->end() - 1));
+            return reverse_iterator(iterator(this->end() - 1));
         }
         reverse_iterator rend()
         {
 
             return reverse_iterator(this->begin() - 1);
         }
-        const_reverse_iterator rend() const
+        const reverse_iterator rend() const
         {
 
-            return const_reverse_iterator(this->begin() - 1);
+            return reverse_iterator(this->begin() - 1);
         }
 
         // // capacity:
@@ -211,13 +211,13 @@ namespace ft
         reference at(size_type n)
         {
             if (capacity() < n)
-                return *(this->end());
+                return  this->_begin[this->_size];
             return this->_begin[n];
         }
         const_reference at(size_type n) const
         {
             if (capacity() < n)
-                return *(this->end());
+                return  this->_begin[this->_size];
             return this->_begin[n];
         }
 

@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   tester.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/27 17:53:07 by rchallie          #+#    #+#             */
-/*   Updated: 2020/12/10 21:36:17 by rchallie         ###   ########.fr       */
+/*   Created: 2020/11/29 16:56:18 by rchallie          #+#    #+#             */
+/*   Updated: 2020/11/29 16:56:35 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tester/tester.hpp"
+# include "tester.hpp"
 
-#include <stack>
-
-int main()
+bool printBoolResult(std::fstream& fs, bool stl_bool, bool ft_bool)
 {
-   // test_vector();
-    // std::cout << "\n";
-     test_map();
-    // std::cout << "\n";
-    // test_stack();
+    fs << "\nBool result : \n";
+    fs << " - STL : " << (stl_bool ? "true" : "false") << std::endl;
+    fs << " - FT  : " << (ft_bool ? "true" : "false") << std::endl;
+
+    return (stl_bool == ft_bool);
 }
