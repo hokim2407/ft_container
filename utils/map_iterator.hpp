@@ -17,17 +17,22 @@ namespace ft
 
     private:
         Node *_ptr;
-        T *_tree;
+        Node *_end;
 
     public:
         map_iterator(){};
         ~map_iterator(){};
-         explicit map_iterator(T *tree): _tree(tree)
+         explicit map_iterator(T *tree)
         {
             this->_ptr = tree->first();
+            this->_end = tree->end();
         }
-        explicit map_iterator(T *tree,Node *node): _ptr(node), _tree(tree)
-        {
+        explicit map_iterator(Node *node,Node *end)
+        {    
+            this->_ptr = node;
+            this->_end = end; 
+     
+
         }
         map_iterator(const map_iterator &it)
         {
@@ -35,14 +40,18 @@ namespace ft
         }
         map_iterator &operator=(const map_iterator &it)
         {
-            this->_tree = it.tree();
-            this->_ptr = it.base();
+            this->_ptr = it.end();
+            this->_end = it.base();
             return *this;
         }
-        T *tree() const { return this->_tree; }
+        void setEnd(Node *end) const { this->_end=end; }
+        void setBase( Node *base) const { this->_ptr=base; }
+        Node *end() const { return this->_end; }
         Node *base() const { return this->_ptr; }
-        value_type &operator*() { return (this->_ptr->data); }
-        value_type *operator->() { return &(this->_ptr->data); }
+        value_type &operator*() {
+            return (this->_ptr->data); }
+        value_type *operator->() { 
+            return &(this->_ptr->data); }
         bool operator==(const map_iterator &it) { return (this->_ptr == it.base()); }
         bool operator!=(const map_iterator &it) { return (this->_ptr != it.base()); }
         bool operator<(const map_iterator &it) { return (this->_ptr < it.base()); }
@@ -58,10 +67,9 @@ namespace ft
 
         map_iterator operator++(int)
         {
-            if(this->_ptr == this->_tree->last())
-                this->_ptr = this->_tree->end();
-            else
-                this->_ptr = this->_ptr->biggerNode();
+            this->_ptr = this->_ptr->biggerNode();
+            if(this->_ptr == NULL)
+                this->_ptr = this->_end;
             return *this;
         }
         map_iterator operator--()
@@ -70,12 +78,11 @@ namespace ft
             return *this;
         }
         map_iterator operator--(int)
-        {
-
-            if(this->_ptr == this->_tree->first())
-                this->_ptr = this->_tree->end();
-            else
-                this->_ptr = this->_ptr->smallerNode();
+        {     
+                
+            this->_ptr = this->_ptr->smallerNode();
+            if(this->_ptr == NULL)
+                this->_ptr = this->_end;
             return *this;
         }
 

@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 
 #include "tester/tester.hpp"
+#include "containers/map.hpp"
 
 #include <stack>
 
 int main()
 {
+
    // test_vector();
     // std::cout << "\n";
      test_map();

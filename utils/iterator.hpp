@@ -91,11 +91,11 @@ namespace ft
     class reverse_iterator
     {
     public:
-        typedef IT iterator;
+        typedef IT inputIterator;
         typedef typename IT::value_type value_type;
 
     private:
-        iterator current;
+        inputIterator current;
 
     public:
         reverse_iterator(){};
@@ -104,16 +104,17 @@ namespace ft
             *this = it;
         }
 
-        explicit reverse_iterator(iterator it)
+        explicit reverse_iterator(inputIterator it)
         {
-            this->current = it;
+            this->current = inputIterator(it); 
+            
         }
         reverse_iterator &operator=(const reverse_iterator &it)
         {
             this->current = it.base();
             return *this;
         }
-        iterator base() const
+        inputIterator base() const
         {
             return (this->current);
         }

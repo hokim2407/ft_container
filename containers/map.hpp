@@ -81,9 +81,20 @@ namespace ft
             this->_value_comp = value_compare();
             this->insert(first, last);
         }
+        map(map &m)
+        {
+                this->_tree = m._tree;
+                this->_alloc = m._alloc;
+                this->_key_comp = m._key_comp;
+                this->_value_comp = m._value_comp;
+        }
+
         map(const map &m)
         {
-            *this = m;
+                this->_tree = m._tree;
+                this->_alloc = m._alloc;
+                this->_key_comp = m._key_comp;
+                this->_value_comp = m._value_comp;
         }
 
         ~map(){};
@@ -103,36 +114,40 @@ namespace ft
         // iterators:
         iterator begin()
         {
-            return iterator(&(this->_tree));
+            return iterator(this->_tree.first(), this->_tree.end());
         }
         const_iterator begin() const
         {
-            return const_iterator(&(this->_tree));
+            return const_iterator(this->_tree.first(), this->_tree.end());
         }
         iterator end()
         {
-            return iterator(&(this->_tree), this->_tree.end());
+
+
+            return iterator( this->_tree.end(), this->_tree.end());
         }
         const_iterator end() const
         {
-            return const_iterator(&(this->_tree), this->_tree.end());
+            return const_iterator(this->_tree.end(), this->_tree.end());
         }
 
         reverse_iterator rbegin()
         {
-            return reverse_iterator(iterator(&(this->_tree), this->_tree.last()));
+
+            return reverse_iterator(iterator(this->_tree.last(), this->_tree.end()));
         }
         const_reverse_iterator rbegin() const
         {
-            return const_reverse_iterator(const_iterator(&(this->_tree), this->_tree.last()));
+            return const_reverse_iterator(const_iterator( this->_tree.last(), this->_tree.end()));
         }
         reverse_iterator rend()
         {
-            return reverse_iterator(iterator(&(this->_tree), this->_tree.end()));
+            
+            return reverse_iterator(iterator( this->_tree.end(), this->_tree.end()));
         }
         const_reverse_iterator rend() const
         {
-            return const_reverse_iterator(const_iterator(&(this->_tree), this->_tree.end()));
+            return const_reverse_iterator(const_iterator(this->_tree.end(), this->_tree.end()));
         }
 
         // capacity:
@@ -167,7 +182,7 @@ namespace ft
                 this->_tree.insert(v);
                 is_new = true;
             }
-            iterator iter = iterator(&(this->_tree),_tree.search(this->_tree.base(), v.first));
+            iterator iter = iterator(_tree.search(this->_tree.base(), v.first), this->_tree.end());
             
             return ft::make_pair<iterator,bool>(iter,is_new);
         }
@@ -234,7 +249,7 @@ namespace ft
         iterator find(const key_type &k)
         {
 
-            return iterator(&(this->_tree), this->_tree.search(this->_tree.base(), k));
+            return iterator( this->_tree.search(this->_tree.base(), k), this->_tree.end());
         }
         const_iterator find(const key_type &k) const
         {

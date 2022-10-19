@@ -91,14 +91,16 @@ namespace ft
         Node *smallerNode()
         {
             Node *ptr = this;
-            if (ptr->left)
-                ptr = ptr->left;
-            else if (ptr->isLeft == false)
-                ptr = ptr->parent;
+            if (this->left){
+                ptr = this->left;
+                }
+            else if (this->isLeft == false)
+                ptr = this->parent;
             else
             {
-                key_type key = ptr->data.first;
-                while (ptr->parent != NULL)
+                key_type key = this->data.first;
+                ptr = this->parent;
+                while (ptr != NULL && ptr->data.first > key)
                 {
                     ptr = ptr->parent;
                 }
@@ -234,6 +236,12 @@ namespace ft
             : _root(NULL), _key_comp(key_comp), _alloc(alloc), debugMode(debug)
         {
             _node_alloc = node_alloc();
+            this->_end = this->_node_alloc.allocate(1);
+            this->_end->parent = NULL;
+            this->_end->left = NULL;
+            this->_end->right = NULL;
+            setFirst(this->_end);
+            setLast(this->_end);
             *this = t;
         };
         Tree &operator=(const Tree &t)
@@ -243,11 +251,18 @@ namespace ft
             this->_key_comp = t.get_key_comp();
             this->_alloc = t.get_alloc();
             this->_size = t.size();
+            this->_end = t.end();
+            if(this->_size == 0){
+
+            setFirst(this->_end);
+            setLast(this->_end);
+            }
+            else{
             setFirst(t.first());
             setLast(t.last());
+            }
 
            // this->_node_alloc.deallocate(this->_end, 1);
-            *(this->_end) = *(t.end());
             return *this;
         }
         Node *base()
@@ -314,7 +329,6 @@ namespace ft
 
 			_node_alloc.construct(newNode, Node(data));
 
-            std::cout<<":"  << std::endl;
 
             if (_root == NULL)
             {
@@ -326,21 +340,22 @@ namespace ft
             Node *parnetNode = findParent(_root, newNode);
             newNode->parent = parnetNode;
 
-            if (*parnetNode > *newNode)
+            if (_key_comp(newNode->data.first,parnetNode->data.first) )
                 parnetNode->setLeft(newNode);
             else
                 parnetNode->setRight(newNode);
 
-            if (newNode->data.first < this->_first->data.first)
+            if ( _key_comp(newNode->data.first , this->_first->data.first))
                 setFirst(newNode);
-            if (newNode->data.first > this->_last->data.first)
+            if (_key_comp(this->_last->data.first, newNode->data.first)  )
                 setLast(newNode);
+
             newNode->setHeight();
             balance(newNode);
 
             if (debugMode)
                 print(_root);
-        }
+            }
         void balance(Node *node)
         {
             while (node != NULL)
@@ -515,12 +530,13 @@ namespace ft
         }
         size_type max_size() const
         {
-            return (this->_alloc.max_size() < (unsigned long)std::numeric_limits<difference_type>::max()) ? this->_alloc.max_size() : (unsigned long)std::numeric_limits<difference_type>::max();
+            
+            return this->_node_alloc.max_size();
         }
         void clear()
         {
             Node *start = this->_first;
-            while (start != NULL)
+            while (start != NULL && start != this->_end)
             {
                // Node *temp = start;
                 start = start->biggerNode();
@@ -553,23 +569,24 @@ namespace ft
             return this->_last;
         }
         Node *end() const
-        {
+        { 
+
             return (this->_end);
         }
 
         Node *setFirst(Node *first)
         {
-            // _rend ++ = _first
-            // _end -- = _first
+            // _rend -- = _first
+            // _end ++ = _first
             this->_first = first;
-            this->_end->left = this->_first;
+            this->_end->right = this->_first;
             return this->_first;
         }
         Node *setLast(Node *last)
         {
-            // _end ++ = _last
+            // _end -- = _last
             this->_last = last;
-            this->_end->right = this->_last;
+            this->_end->left = this->_last;
             return this->_last;
         }
     };

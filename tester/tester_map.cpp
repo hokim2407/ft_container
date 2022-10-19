@@ -132,514 +132,514 @@ void test_map()
 		fs.close();     
 	}
 
-	// /* Range constrcutor */
-	// {
-	// 	const int range_int[] = {-652, -4, 98, 54, -210};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Range constrcutor */
+	{
+		const int range_int[] = {-652, -4, 98, 54, -210};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/constructor_range", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/constructor_range", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	std::map<int, std::string> stl_map_copy(stl_map.begin(), stl_map.end());
-	// 	ft::map<int, std::string> ft_map_copy(ft_map.begin(), ft_map.end());
+		std::map<int, std::string> stl_map_copy(stl_map.begin(), stl_map.end());
+		ft::map<int, std::string> ft_map_copy(ft_map.begin(), ft_map.end());
 
-	// 	std::cout << ((printMapAttributes(fs, stl_map_copy, ft_map_copy) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printMapAttributes(fs, stl_map_copy, ft_map_copy) == true) ? "[OK]" : "[NOP]");
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {-652, -4, 98, 54, -210};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string> ft_map_copy(ft_map.begin(), ft_map.end());\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {-652, -4, 98, 54, -210};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string> stl_map_copy(stl_map.begin(), stl_map.end());\n";
-	// 	fs.close();
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {-652, -4, 98, 54, -210};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string> ft_map_copy(ft_map.begin(), ft_map.end());\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {-652, -4, 98, 54, -210};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string> stl_map_copy(stl_map.begin(), stl_map.end());\n";
+		fs.close();
+	}
 
-	// /* Copy constructor */
-	// {
-	// 	const int range_int[] = {842, 695, -98, -2, -4};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Copy constructor */
+	{
+		const int range_int[] = {842, 695, -98, -2, -4};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/constructor_copy", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/constructor_copy", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	std::map<int, std::string> stl_map_copy(stl_map);
-	// 	ft::map<int, std::string> ft_map_copy(ft_map);
+		std::map<int, std::string> stl_map_copy(stl_map);
+		ft::map<int, std::string> ft_map_copy(ft_map);
 
-	// 	std::cout << ((printMapAttributes(fs, stl_map_copy, ft_map_copy) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printMapAttributes(fs, stl_map_copy, ft_map_copy) == true) ? "[OK]" : "[NOP]");
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {842, 695, -98, -2, -4};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string> ft_map_copy(ft_map);\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {842, 695, -98, -2, -4};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string> stl_map_copy(stl_map);\n";
-	// 	fs.close();
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {842, 695, -98, -2, -4};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string> ft_map_copy(ft_map);\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {842, 695, -98, -2, -4};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string> stl_map_copy(stl_map);\n";
+		fs.close();
+	}
 
-	// /* Assign operator */
-	// {
-	// 	const int range_int[] = {478, 952, 12, -96, -9};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Assign operator */
+	{
+		const int range_int[] = {478, 952, 12, -96, -9};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/operator_assign", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/operator_assign", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	std::map<int, std::string> stl_map_copy = stl_map;
-	// 	ft::map<int, std::string> ft_map_copy = ft_map;
+		std::map<int, std::string> stl_map_copy = stl_map;
+		ft::map<int, std::string> ft_map_copy = ft_map;
 
-	// 	std::cout << ((printMapAttributes(fs, stl_map_copy, ft_map_copy) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printMapAttributes(fs, stl_map_copy, ft_map_copy) == true) ? "[OK]" : "[NOP]");
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {478, 952, 12, -96, -9};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string> ft_map_copy = ft_map;\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {478, 952, 12, -96, -9};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string> stl_map_copy = stl_map;\n";
-	// 	fs.close();
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {478, 952, 12, -96, -9};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string> ft_map_copy = ft_map;\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {478, 952, 12, -96, -9};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string> stl_map_copy = stl_map;\n";
+		fs.close();
+	}
 
-	// std::cout << std::endl;
-	// std::cout << "Iterators : ";
+	std::cout << std::endl;
+	std::cout << "Iterators : ";
 
-	// /* Begin */
-	// {
-	// 	const int range_int[] = {1485, 5, 89, 652, -94};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Begin */
+	{
+		const int range_int[] = {1485, 5, 89, 652, -94};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/begin", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/begin", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	printMapAttributes(fs, stl_map, ft_map);
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_map.begin()).first, (*ft_map.begin()).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_map.begin()).second, (*ft_map.begin()).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		printMapAttributes(fs, stl_map, ft_map);
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_map.begin()).first, (*ft_map.begin()).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_map.begin()).second, (*ft_map.begin()).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {1485, 5, 89, 652, -94};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {1485, 5, 89, 652, -94};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs.close(); 
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {1485, 5, 89, 652, -94};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {1485, 5, 89, 652, -94};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs.close(); 
+	}
 
-	// /* Const begin */
-	// {
-	// 	const int range_int[] = {48, 9, 12, 63, 99};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Const begin */
+	{
+		const int range_int[] = {48, 9, 12, 63, 99};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/begin_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/begin_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	std::map<int, std::string>::const_iterator stl_it = stl_map.begin();
-	// 	ft::map<int, std::string>::const_iterator ft_it = ft_map.begin();
+		std::map<int, std::string>::const_iterator stl_it = stl_map.begin();
+		ft::map<int, std::string>::const_iterator ft_it = ft_map.begin();
 
-	// 	printMapAttributes(fs, stl_map, ft_map);
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		printMapAttributes(fs, stl_map, ft_map);
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {48, 9, 12, 63, 99};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string>::const_iterator ft_it = ft_map.begin();\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {48, 9, 12, 63, 99};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string>::const_iterator stl_it = stl_map.begin();\n";
-	// 	fs.close(); 
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {48, 9, 12, 63, 99};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string>::const_iterator ft_it = ft_map.begin();\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {48, 9, 12, 63, 99};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string>::const_iterator stl_it = stl_map.begin();\n";
+		fs.close(); 
+	}
 
-	// /* End */
-	// {
-	// 	const int range_int[] = {-99, 584, 965, 366, 77};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* End */
+	{
+		const int range_int[] = {-99, 584, 965, 366, 77};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/end", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/end", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	std::map<int, std::string>::iterator stl_it = stl_map.end();
-	// 	ft::map<int, std::string>::iterator ft_it = ft_map.end();
+		std::map<int, std::string>::iterator stl_it = stl_map.end();
+		ft::map<int, std::string>::iterator ft_it = ft_map.end();
 
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	--stl_it;
-	// 	--ft_it;
+		--stl_it;
+		--ft_it;
 
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string>::iterator ft_it = ft_map.end();\n";
-	// 	fs << "--ft_it;\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string>::iterator stl_it = stl_map.end();\n";
-	// 	fs << "--stl_it;\n";
-	// 	fs.close(); 
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string>::iterator ft_it = ft_map.end();\n";
+		fs << "--ft_it;\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string>::iterator stl_it = stl_map.end();\n";
+		fs << "--stl_it;\n";
+		fs.close(); 
+	}
 
-	// /* Const end */
-	// {
-	// 	const int range_int[] = {154, 966, 3, -84, 75};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Const end */
+	{
+		const int range_int[] = {154, 966, 3, -84, 75};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/end_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/end_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	std::map<int, std::string>::const_iterator stl_it = stl_map.end();
-	// 	ft::map<int, std::string>::const_iterator ft_it = ft_map.end();
+		std::map<int, std::string>::const_iterator stl_it = stl_map.end();
+		ft::map<int, std::string>::const_iterator ft_it = ft_map.end();
 
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	--stl_it;
-	// 	--ft_it;
+		--stl_it;
+		--ft_it;
 
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {154, 966, 3, -84, 75};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string>::const_iterator ft_it = ft_map.end();\n";
-	// 	fs << "--ft_it;\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {154, 966, 3, -84, 75};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string>::const_iterator stl_it = stl_map.end();\n";
-	// 	fs << "--stl_it;\n";
-	// 	fs.close();
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {154, 966, 3, -84, 75};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string>::const_iterator ft_it = ft_map.end();\n";
+		fs << "--ft_it;\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {154, 966, 3, -84, 75};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string>::const_iterator stl_it = stl_map.end();\n";
+		fs << "--stl_it;\n";
+		fs.close();
+	}
 
-	// /* Reverse begin */
-	// {
-	// 	const int range_int[] = {1458, -985, 58, 632, 65};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Reverse begin */
+	{
+		const int range_int[] = {1458, -985, 58, 632, 65};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/reverse_begin", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/reverse_begin", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	std::map<int, std::string>::reverse_iterator stl_it = stl_map.rbegin();
-	// 	ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rbegin();
+		std::map<int, std::string>::reverse_iterator stl_it = stl_map.rbegin();
+		ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rbegin();
 
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	++stl_it;
-	// 	++ft_it;
+		++stl_it;
+		++ft_it;
 
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {1458, -985, 58, 632, 65};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rbegin();\n";
-	// 	fs << "++ft_it;\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {1458, -985, 58, 632, 65};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string>::reverse_iterator stl_it = stl_map.rbegin();\n";
-	// 	fs << "++stl_it;\n";
-	// 	fs.close();
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {1458, -985, 58, 632, 65};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rbegin();\n";
+		fs << "++ft_it;\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {1458, -985, 58, 632, 65};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string>::reverse_iterator stl_it = stl_map.rbegin();\n";
+		fs << "++stl_it;\n";
+		fs.close();
+	}
 
-	// /* Const reverse begin */
-	// {
-	// 	const int range_int[] = {859, 99, -325, -65, -98};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Const reverse begin */
+	{
+		const int range_int[] = {859, 99, -325, -65, -98};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/reverse_begin_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/reverse_begin_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rbegin();
-	// 	//ft::map<int, std::string>::const_reverse_iterator ft_it = ft_map.rbegin();
-	// 	ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rbegin();
+		std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rbegin();
+		//ft::map<int, std::string>::const_reverse_iterator ft_it = ft_map.rbegin();
+		ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rbegin();
 
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {859, 99, -325, -65, -98};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string>::const_reverse_iterator ft_it = ft_map.rbegin();\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {859, 99, -325, -65, -98};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rbegin();\n";
-	// 	fs.close();
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {859, 99, -325, -65, -98};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string>::const_reverse_iterator ft_it = ft_map.rbegin();\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {859, 99, -325, -65, -98};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rbegin();\n";
+		fs.close();
+	}
 
-	// /* Reverse end */
-	// {
-	// 	const int range_int[] = {325, -657, -942, -8, 66};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Reverse end */
+	{
+		const int range_int[] = {325, -657, -942, -8, 66};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/reverse_end", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/reverse_end", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	std::map<int, std::string>::reverse_iterator stl_it = stl_map.rend();
-	// 	ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rend();
+		std::map<int, std::string>::reverse_iterator stl_it = stl_map.rend();
+		ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rend();
 
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	--stl_it;
-	// 	--ft_it;
+		--stl_it;
+		--ft_it;
 
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {325, -657, -942, -8, 66};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rend();\n";
-	// 	fs << "--ft_it;\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {325, -657, -942, -8, 66};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string>::reverse_iterator stl_it = stl_map.rend();\n";
-	// 	fs << "--stl_it;\n";
-	// 	fs.close();
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {325, -657, -942, -8, 66};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rend();\n";
+		fs << "--ft_it;\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {325, -657, -942, -8, 66};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string>::reverse_iterator stl_it = stl_map.rend();\n";
+		fs << "--stl_it;\n";
+		fs.close();
+	}
 
 
-	// /* Const reverse end */
-	// {
-	// 	const int range_int[] = {-99, 584, 965, 366, 77};
-	// 	const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
+	/* Const reverse end */
+	{
+		const int range_int[] = {-99, 584, 965, 366, 77};
+		const std::string range_str[] = {"One", "Two", "Three", "Four", "Five"};
 
-	// 	std::map<int, std::string> stl_map;
-	// 	ft::map<int, std::string> ft_map;
+		std::map<int, std::string> stl_map;
+		ft::map<int, std::string> ft_map;
 
-	// 	for (int i = 0; i < 5; i++)
-	// 	{
-	// 		stl_map.insert(std::make_pair(range_int[i], range_str[i]));
-	// 		ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
-	// 	}
+		for (int i = 0; i < 5; i++)
+		{
+			stl_map.insert(std::make_pair(range_int[i], range_str[i]));
+			ft_map.insert(ft::make_pair(range_int[i], range_str[i]));
+		}
 
-	// 	fs.open("./tester/maps_output/reverse_end_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
+		fs.open("./tester/maps_output/reverse_end_const", std::fstream::in | std::fstream::out | std::fstream::trunc);
 		
-	// 	std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rend();
-	// 	ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rend();
+		std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rend();
+		ft::map<int, std::string>::reverse_iterator ft_it = ft_map.rend();
 
-	// 	printMapAttributes(fs, stl_map, ft_map);
+		printMapAttributes(fs, stl_map, ft_map);
 
-	// 	--(--stl_it);
-	// 	--(--ft_it);
+		--(--stl_it);
+		--(--ft_it);
 
-	// 	std::cout << "[";
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
-	// 	std::cout << "]";
+		std::cout << "[";
+		std::cout << ((printSingleValue(fs, (*stl_it).first, (*ft_it).first) == true) ? "[OK]" : "[NOP]");
+		std::cout << ((printSingleValue(fs, (*stl_it).second, (*ft_it).second) == true) ? "[OK]" : "[NOP]");
+		std::cout << "]";
 
-	// 	fs << "\nCode executed:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "ft::map<int, std::string> ft_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "ft::map<int, std::string>::const_reverse_iterator ft_it = ft_map.rend();\n";
-	// 	fs << "--(--ft_it);\n";
-	// 	fs << "\nCompared with:\n";
-	// 	fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
-	// 	fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
-	// 	fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
-	// 	fs << "std::map<int, std::string> stl_map;\n";
-	// 	fs << "for (int i = 0; i < 5; i++)\n";
-	// 	fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
-	// 	fs << "std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rend();\n";
-	// 	fs << "--(--stl_it);\n";
-	// 	fs.close(); 
-	// }
+		fs << "\nCode executed:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "ft::map<int, std::string> ft_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    ft_map.insert(ft::make_pair(range_int[i], range_str[i]));\n";
+		fs << "ft::map<int, std::string>::const_reverse_iterator ft_it = ft_map.rend();\n";
+		fs << "--(--ft_it);\n";
+		fs << "\nCompared with:\n";
+		fs << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+		fs << "const int range_int[] = {-99, 584, 965, 366, 77};\n";
+		fs << "const std::string range_str[] = {\"One\", \"Two\", \"Three\", \"Four\", \"Five\"};\n";
+		fs << "std::map<int, std::string> stl_map;\n";
+		fs << "for (int i = 0; i < 5; i++)\n";
+		fs << "    stl_map.insert(std::make_pair(range_int[i], range_str[i]));\n";
+		fs << "std::map<int, std::string>::const_reverse_iterator stl_it = stl_map.rend();\n";
+		fs << "--(--stl_it);\n";
+		fs.close(); 
+	}
 
 	// std::cout << std::endl;
 	// std::cout << "Capacity : ";
