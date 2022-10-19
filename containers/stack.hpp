@@ -7,8 +7,9 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_STACK
-#define _LIBCPP_STACK
+
+#ifndef STACK_HPP
+#define STACK_HPP
 
 #include "vector.hpp"
 
